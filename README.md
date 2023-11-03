@@ -1,5 +1,14 @@
 # DevRev OpenAI Tooling
 
+## Setting up config file
+
+1. Create a file called `config.py` in the root directory of the project.
+2. Then setup the configs according to your api access, add the following fields:
+    - for llama:
+        - `llama_token = "YOUR_API_KEY"`
+        - `llama_base = "https://api.llama-api.com"`
+        - `llama_model = "llama-13b-chat"` (or whatever model you want to use)
+
 ## FunctionInterface Class Documentation
 
 ### Overview
