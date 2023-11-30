@@ -1,43 +1,79 @@
-# DevRev OpenAI Tooling
+# my-app
 
-## Setting up config file
+## Installation
 
-1. Create a file called `config.py` in the root directory of the project.
-2. Then setup the configs according to your api access, add the following fields:
-    - for llama:
-        - `llama_token = "YOUR_API_KEY"`
-        - `llama_base = "https://api.llama-api.com"`
-        - `llama_model = "llama-13b-chat"` (or whatever model you want to use)
+Install the LangChain CLI if you haven't yet
 
-## FunctionInterface Class Documentation
+```bash
+pip install -U langchain-cli
+```
 
-### Overview
-The `FunctionInterface` class is a Python class that provides a structured representation of a function. It includes the function's name, description, and parameters. It also provides a method to convert this information into a JSON format.
+## Adding packages
 
-### Attributes
-- `name` (str): The name of the function.
-- `description` (str): The docstring of the function.
-- `parameters` (dict): A dictionary representing the parameters of the function. Each key is a parameter name, and the value is a dictionary with a single key 'type' and the type of the parameter as the value.
-- `json` (str): A JSON representation of the function's information.
+```bash
+# adding packages from 
+# https://github.com/langchain-ai/langchain/tree/master/templates
+langchain app add $PROJECT_NAME
 
-### Methods
-- `__init__(self, function)`: Initializes the FunctionInterface object with the provided function. It extracts the function's name, docstring, and parameters, and creates a JSON representation of this information.
-- `__str__(self)`: Returns the JSON representation of the function's information as a string.
-- `__repr__(self)`: Returns the JSON representation of the function's information as a string.
-- `to_json(self)`: Returns the JSON representation of the function's information.
+# adding custom GitHub repo packages
+langchain app add --repo $OWNER/$REPO
+# or with whole git string (supports other git providers):
+# langchain app add git+https://github.com/hwchase17/chain-of-verification
 
-## OpenAIHandler Class Documentation
+# with a custom api mount point (defaults to `/{package_name}`)
+langchain app add $PROJECT_NAME --api_path=/my/custom/path/rag
+```
 
-### Overview
-The `OpenAIHandler` class is a Python class that serves as a handler for OpenAI's GPT-3 model. It is designed to facilitate the interaction with the model by providing a structured way to send queries and receive responses.
+Note: you remove packages by their api path
 
-### Attributes
-- `api_base` (str): The base URL for the OpenAI API.
-- `api_key` (str): The API key for authenticating with the OpenAI API.
-- `functions` (list): A list of functions that the model can call.
-- `model` (str, optional): The model to use for the chat. Defaults to 'llama-13b-chat'.
-- `history` (list): A list to keep track of the conversation history.
+```bash
+langchain app remove my/custom/path/rag
+```
 
-### Methods
-- `__init__(self, api_base: str, api_key: str, functions: list, model: str = 'llama-13b-chat')`: Initializes the OpenAIHandler object with the provided API base, API key, functions, and model.
-- `query(self, message: str) -> Union[dict, str]`: Sends a message to the OpenAI API and returns the response. If the response indicates a function call, it returns the function call as a dictionary. Otherwise, it returns the content of the response as a string.
+## Setup LangSmith (Optional)
+LangSmith will help us trace, monitor and debug LangChain applications. 
+LangSmith is currently in private beta, you can sign up [here](https://smith.langchain.com/). 
+If you don't have access, you can skip this section
+
+
+```shell
+export LANGCHAIN_TRACING_V2=true
+export LANGCHAIN_API_KEY=<your-api-key>
+export LANGCHAIN_PROJECT=<your-project>  # if not specified, defaults to "default"
+```
+
+## Launch LangServe
+
+```bash
+langchain serve
+```
+
+## Running in Docker
+
+This project folder includes a Dockerfile that allows you to easily build and host your LangServe app.
+
+### Building the Image
+
+To build the image, you simply:
+
+```shell
+docker build . -t my-langserve-app
+```
+
+If you tag your image with something other than `my-langserve-app`,
+note it for use in the next step.
+
+### Running the Image Locally
+
+To run the image, you'll need to include any environment variables
+necessary for your application.
+
+In the below example, we inject the `OPENAI_API_KEY` environment
+variable with the value set in my local environment
+(`$OPENAI_API_KEY`)
+
+We also expose port 8080 with the `-p 8080:8080` option.
+
+```shell
+docker run -e OPENAI_API_KEY=$OPENAI_API_KEY -p 8080:8080 my-langserve-app
+```
