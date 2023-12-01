@@ -17,7 +17,7 @@ devrev_functions = [
                 },
                 "issue.priority": {
                     "title": "issue.priority",
-                    "type": "array of strings",
+                    "type": ["P0", "P1", "P2", "P3"],
                     "description": "Filters for issues with any of the provided priorities. Allowed values: p0, p1, p2, p3."
                 },
                 "issue.rev_orgs": {
