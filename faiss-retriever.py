@@ -1,11 +1,4 @@
-import re
-from typing import Union, List
-from langchain.agents import (
-    AgentOutputParser,
-    AgentExecutor,
-    LLMSingleActionAgent,
-    Tool,
-)
+from typing import List
 import json
 import logging
 import sys
@@ -15,18 +8,17 @@ from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import PromptTemplate
 from pydantic import BaseModel, Field
 from langchain.llms import OpenAI
-from langchain.prompts import StringPromptTemplate
-from langchain.schema import AgentAction, AgentFinish
-from langchain.utilities import SerpAPIWrapper
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.schema import Document
 from langchain.vectorstores import FAISS
 from langchain.chat_models import ChatOpenAI
 from langchain.retrievers.multi_query import MultiQueryRetriever
+from langchain.retrievers import ContextualCompressionRetriever
+from langchain.retrievers.document_compressors import LLMChainExtractor
 
 from devrev.functions import devrev_functions as tools
 
-from config import openai_token
+from config import openai_key
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logging.getLogger("langchain.retrievers.multi_query").setLevel(logging.INFO)
@@ -37,15 +29,13 @@ adapted_toolbase = [
 ]
 
 embeddings = OpenAIEmbeddings(
-    openai_api_key=openai_token,
+    openai_api_key=openai_key,
 )
 
 vector_store = FAISS.from_documents(
     adapted_toolbase,
     embeddings,
 )
-
-vs_retriever = vector_store.as_retriever()
 
 # Output parser will split the LLM result into a list of queries
 class LineList(BaseModel):
@@ -92,16 +82,33 @@ QUERY_PROMPT = PromptTemplate(
     Original question: {question}""",
 )
 
-llm = ChatOpenAI(
-    openai_api_key=openai_token,
+llm = OpenAI(
+    openai_api_key=openai_key,
     temperature=0
 )
 
-llm_chain = LLMChain(llm=llm, prompt=QUERY_PROMPT, output_parser=output_parser)
+llm_chat = ChatOpenAI(
+    openai_api_key=openai_key,
+    temperature=0
+)
+
+compressor = LLMChainExtractor.from_llm(llm)
+
+llm_chain = LLMChain(llm=llm_chat, prompt=QUERY_PROMPT, output_parser=output_parser)
+
+# RETRIEVERS
+
+vs_retriever = vector_store.as_retriever()
 
 llm_mq_retriever = MultiQueryRetriever(
     retriever=vs_retriever,
     llm_chain = llm_chain,
+    parser_key='lines'
+)
+
+compression_retriever = ContextualCompressionRetriever(
+    retriever=vs_retriever,
+    compressor=compressor,
     parser_key='lines'
 )
 
@@ -115,11 +122,16 @@ def get_tools_mq(query:str) -> list:
     docs = llm_mq_retriever.get_relevant_documents(query)
     return [ tools[int(doc.metadata["index"])] for doc in docs ]
 
+def get_tools_cr(query:str) -> list:
+    """Get the tools from the query"""
+    docs = compression_retriever.get_relevant_documents(query)
+    return [ tools[int(doc.metadata["index"])] for doc in docs ]
+
 if __name__ == '__main__':
     print('tool retriever is running')
     while True:
         prompt = input('prompt: ')
-        retrieved = get_tools_mq(prompt)
+        retrieved = get_tools_vs(prompt)
         print('retrieved tools:', len(retrieved))
         for tool in retrieved:
             print(tool['name'])
