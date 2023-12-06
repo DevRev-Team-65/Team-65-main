@@ -179,5 +179,236 @@ devrev_functions = [
             "type": "object",
             "properties": {}
         }
+    },
+
+    # bonus points functions
+
+    {
+        "name": "equal_to",
+        "description": "Checks if two values are equal.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "left_value": {
+                    "title": "left_value",
+                    "type": "string",
+                    "description": "The left-hand side value for comparison."
+                },
+                "right_value": {
+                    "title": "right_value",
+                    "type": "string",
+                    "description": "The right-hand side value for comparison."
+                }
+            },
+            "required": ["left_value", "right_value"]
+        }
+    },
+
+
+    {
+        "name": "logical_and",
+        "description": "Performs a logical AND operation on two conditions.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "condition1": {
+                    "title": "condition1",
+                    "type": "boolean",
+                    "description": "The first condition for the logical AND operation."
+                },
+                "condition2": {
+                    "title": "condition2",
+                    "type": "boolean",
+                    "description": "The second condition for the logical AND operation."
+                }
+            },
+            "required": []
+        }
+    },
+
+    {
+        "name": "logical_or",
+        "description": "Performs a logical OR operation on two conditions.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "condition1": {
+                    "title": "condition1",
+                    "type": "boolean",
+                    "description": "The first condition for the logical OR operation."
+                },
+                "condition2": {
+                    "title": "condition2",
+                    "type": "boolean",
+                    "description": "The second condition for the logical OR operation."
+                }
+            },
+            "required": []
+        }
+    },
+
+
+    {
+        "name": "logical_not",
+        "description": "Performs a logical NOT operation on a condition.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "condition": {
+                    "title": "condition",
+                    "type": "boolean",
+                    "description": "The condition to negate using logical NOT."
+                }
+            },
+            "required": []
+        }
+    },
+
+
+    {
+        "name": "Lesser_than",
+        "description": "Checks if the left value is lesser than the right value.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "left_value": {
+                    "title": "left_value",
+                    "type": "number",
+                    "description": "The left-hand side value for comparison."
+                },
+                "right_value": {
+                    "title": "right_value",
+                    "type": "number",
+                    "description": "The right-hand side value for comparison."
+                }
+            },
+            "required": []
+        }
+    },
+
+    {
+        "name": "Greater_than",
+        "description": "Checks if the left value is greater than the right value.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "left_value": {
+                    "title": "left_value",
+                    "type": "number",
+                    "description": "The left-hand side value for comparison."
+                },
+                "right_value": {
+                    "title": "right_value",
+                    "type": "number",
+                    "description": "The right-hand side value for comparison."
+                }
+            },
+            "required": []
+        }
+    },
+
+    {
+        "name": "Equal_to",
+        "description": "Checks if the left value is equal to the right value.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "left_value": {
+                    "title": "left_value",
+                    "type": "number",
+                    "description": "The left-hand side value for comparison."
+                },
+                "right_value": {
+                    "title": "right_value",
+                    "type": "number",
+                    "description": "The right-hand side value for comparison."
+                }
+            },
+            "required": []
+        }
+    },
+
+
+    {
+        "name": "resolution_status",
+        "description": "Gives an array of only unresolved issues",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "unresolved_issue": {
+                    "title": "unresolved_issue",
+                    "type": "array",
+                    "description": "An array of only unresolved issues."
+                }
+            },
+            "required": []
+        }
+    },
+
+    {
+        "name": "length",
+        "description": "Returns the length of an array.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "array": {
+                    "title": "array",
+                    "type": "array",
+                    "description": "The array for which to determine the length."
+                }
+            },
+            "required": []
+        }
+    },
+
+    {
+        "name": "if_else_condition",
+        "description": "Executes a conditional statement with if-else logic.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "Function": {
+                    "title": "Function",
+                    "type": "string",
+                    "description": "The conditional function or expression.",
+                },
+                "If_true": {
+                    "title": "If_true",
+                    "type": "string",
+                    "description": "Action to be taken if the condition is true.",
+                },
+                "If_false": {
+                    "title": "If_false",
+                    "type": "string",
+                    "description": "Action to be taken if the condition is false.",
+                }
+            },
+            "required": []
+        }
+    },
+
+    {
+        "name": "loop_condition",
+        "description": "Executes a loop for a specified number of repetitions.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "Repetitions": {
+                    "title": "Repetitions",
+                    "type": "integer",
+                    "description": "The number of repetitions for the loop.",
+                },
+                "Go_to": {
+                    "title": "Go_to",
+                    "type": "string",
+                    "description": "The target location or action to jump to after each iteration.",
+                }
+            },
+            "required": []
+        }
     }
+
+
+
+
 ]

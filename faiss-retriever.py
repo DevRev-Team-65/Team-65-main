@@ -16,7 +16,7 @@ from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import LLMChainExtractor
 
-from devrev.functions import devrev_functions as tools
+from functions import devrev_functions as tools
 
 from config import openai_key
 
