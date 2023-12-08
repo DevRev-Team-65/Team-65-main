@@ -2,6 +2,8 @@ from openai import OpenAI
 import openai
 import argparse
 
+# COT PROMPTING
+
 parser = argparse.ArgumentParser()
 parser.add_argument("--query", default=None, type=str, required=True, help="Enter your query: ")
 parser.add_argument("--api_key", default=None, type=str, required=True, help="Enter your OpenAI API key: ")
