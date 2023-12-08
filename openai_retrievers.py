@@ -36,15 +36,21 @@ class VectorStoreRetriever:
     '''
     VectorStore is a wrapper around FAISS that allows for easy addition of functions and queries
     '''
-    def __init__(self, openai_key: str):
+    def __init__(self, openai_key: str, name: str, init_functions: list[dict]):
         self.embeddings = OpenAIEmbeddings(
             openai_api_key=openai_key,
         )
         #create a vector store
-        self.vector_store = FAISS.from_documents(
-            [],
-            self.embeddings,
-        )
+        try:
+            self.vector_store.load_local(name)
+        except:
+            #no local store
+            self.vector_store = FAISS.from_documents(
+                init_functions,
+                self.embeddings,
+            )
+            self.vector_store.save_local(name)
+        self.vs_name = name
         self.vs_retriever = self.vector_store.as_retriever()
         self.documents = 0
     
@@ -55,6 +61,8 @@ class VectorStoreRetriever:
             self.documents += 1
 
         self.vector_store.add_documents(function_list)
+
+        self.vector_store.save_local(self.vs_name)
     
     def find_functions(self, query: str):
         return self.vector_store.get_relevant_documents(query)
@@ -66,8 +74,8 @@ class CustomMultiQueryRetriever(MultiQueryRetriever):
     '''
     CustomMultiQueryRetriever is a wrapper around MultiQueryRetriever that allows for easy addition of functions and queries
     '''
-    def __init__(self, openai_key: str):
-        self.vector_store = VectorStoreRetriever(openai_key)
+    def __init__(self, openai_key: str, name: str, init_functions: list[dict]):
+        self.vector_store = VectorStoreRetriever(openai_key, name, init_functions)
         prompt_obj = PromptTemplate(
             input_variables=["question"],
             template="""You are an AI language model assistant. Your task is to break down
