@@ -2,6 +2,7 @@ from examples import example_queries
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.chat_models import ChatOpenAI
+from utils import OutputParser
 
 class ChainOfThoughtComposer(LLMChain):
     def __init__(
@@ -76,10 +77,12 @@ class ChainOfThoughtComposer(LLMChain):
             temperature=temperature,
             max_tokens=max_tokens
         )
+        self.output_parser = OutputParser
+        
         super().__init__(
             llm=self.llm_chat_obj,
             prompt=self.prompt_obj,
-            output_parser=None #TODO: GET THIS MAN AN OUTPUT PARSER
+            output_parser=self.output_parser
         )
     
     def __call__(self, query: str, functions: list[dict]):
