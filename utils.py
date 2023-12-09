@@ -1,6 +1,7 @@
 import json
 from typing import List
 from pydantic import BaseModel, Field, ValidationError, validator
+from langchain.output_parsers import PydanticOutputParser
 
 class ArgumentData(BaseModel):
     argument_name: str
@@ -10,7 +11,7 @@ class ToolData(BaseModel):
     tool_name: str
     arguments: List[ArgumentData]
 
-class OutputParser(BaseModel):
+class LLMOutputModel(BaseModel):
     tools: List[ToolData]
 
     @validator('tools', each_item=True)
@@ -25,3 +26,10 @@ class OutputParser(BaseModel):
     def parse_and_validate(cls, json_str: str):
         json_data = json.loads(json_str)
         return cls(tools=json_data)
+
+class ToolOutputParser(PydanticOutputParser):
+    def __init__(self) -> None:
+        super().__init__(pydantic_object=LLMOutputModel)
+
+    def parse(self, text: str) -> LLMOutputModel:
+        return LLMOutputModel.parse_and_validate(text)
