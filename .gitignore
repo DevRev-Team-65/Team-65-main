@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# ANY CSV FILE GENERATED/USED
+*.csv
+
 # Vector Cache
 *.faiss
 *.pkl

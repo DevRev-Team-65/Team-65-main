@@ -71,7 +71,7 @@ class VectorStoreRetriever:
         self.vector_store.save_local(self.vs_name)
     
     def find_functions(self, query: str):
-        return self.vector_store.get_relevant_documents(query)
+        return self.vs_retriever.get_relevant_documents(query)
     
     def get_retriever(self):
         return self.vs_retriever
@@ -81,12 +81,12 @@ class CustomMultiQueryRetriever(MultiQueryRetriever):
     CustomMultiQueryRetriever is a wrapper around MultiQueryRetriever that allows for easy addition of functions and queries
     '''
     def __init__(self, openai_key: str, name: str, init_functions: list[dict]):
+        name = "mqr_" + name
         prompt_obj = PromptTemplate(
             input_variables=["question"],
-            template="""You are an AI language model assistant. Your task is to break down
-            the question into a list different steps. The steps should be as specific as 
-            possible. The number of steps should be less, but not lesser than neccessary.
-            Your goal is to have the task broken down into simpler atomic steps.
+            template="""Your task is to break down the question into a list different steps.
+            The steps should be as specific as possible. Your goal is to have the task broken
+            minimum number of simpler atomic steps.
             
             Example question: Prioritize my P0 issues and add them to the current sprint
             Example answer:
@@ -124,6 +124,7 @@ class CustomContextualCompressionRetriever(ContextualCompressionRetriever):
     CustomContextualCompressionRetriever is a wrapper around ContextualCompressionRetriever that allows for easy addition of functions and queries
     '''
     def __init__(self, openai_key: str, name: str, init_functions: list[dict]):
+        name = "ccr_" + name
         vector_store = VectorStoreRetriever(openai_key, name, init_functions)
         llm = OpenAI(
             openai_api_key=openai_key,
