@@ -4,6 +4,10 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.chat_models import ChatOpenAI
 
+examples = "".join(
+    [f"Query: {query}\nOutput: {output}\n" for query, output in example_queries]
+)
+
 class ChainOfThoughtComposer(LLMChain):
     def __init__(
             self,
@@ -11,9 +15,7 @@ class ChainOfThoughtComposer(LLMChain):
             temperature: float = 0.0,
             max_tokens: int = 1000
         ):
-        self.examples = "".join(
-            [f"Query: {query}\nOutput: {output}\n" for query, output in example_queries])
-        self.prompt_obj = PromptTemplate(
+        prompt_obj = PromptTemplate(
             input_variables=["query", "functions", "examples"],
             template="""
             You are a helpful chatbot and you need to answer the given query by giving an output in JSON format of the tools,
@@ -38,28 +40,28 @@ class ChainOfThoughtComposer(LLMChain):
             - The desired output format is in json, so we can create a list of objects (tools) and their respective arguments and values in json format.
             - The first object would be the `works_list` tool with the arguments for `ticket.rev_org` and `owned_by` and their corresponding values.
             - The second object would be the `summarize_objects` tool with the argument for `objects` and the value of "REV-123" from the `works_list` tool.
-            [{
+            {{
                 "tool_name": "works_list",
                 "arguments": [
-                    {
+                    {{
                     "argument_name": "ticket.rev_org",
                     "argument_value": "REV-123"
-                    },
-                    {
+                    }},
+                    {{
                     "argument_name": "owned_by",
                     "argument_value": "DEVU-789"
-                    }
+                    }}
                 ]
-            },
-            {
+            }},
+            {{
                 "tool_name": "summarize_objects",
                 "arguments": [
-                    {
+                    {{
                     "argument_name": "objects",
                     "argument_value": "$$PREV[0]"
-                    }
+                    }}
                 ]
-            }]
+            }}]
 
             if the query is "Summarize issues similar to
             don:core:dvrv-us-1:devo/0:issue/1" then the thought process should be:
@@ -72,16 +74,27 @@ class ChainOfThoughtComposer(LLMChain):
             {query}
             """
         )
-        self.llm_chat_obj = ChatOpenAI(
+        llm_chat_obj = ChatOpenAI(
             openai_api_key=openai_api_key,
             temperature=temperature,
             max_tokens=max_tokens
         )
         super().__init__(
-            llm=self.llm_chat_obj,
-            prompt=self.prompt_obj,
-            output_parser=ToolOutputParser
+            llm=llm_chat_obj,
+            prompt=prompt_obj
         )
+        # super().__init__(
+        #     llm=llm_chat_obj,
+        #     prompt=prompt_obj,
+        #     output_parser=ToolOutputParser()
+        # )
     
     def __call__(self, query: str, functions: list[dict]):
-        return super().__call__(query=query, functions=functions, examples=self.examples)
+        return super().__call__(
+            {
+                "query": query,
+                "functions": functions,
+                "examples": examples,
+                '\n                "tool_name"': '\n                "tool_name"',
+            }
+        )

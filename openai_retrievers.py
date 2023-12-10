@@ -46,13 +46,13 @@ class VectorStoreRetriever:
         except:
             #no local store
             self.vector_store = FAISS.from_documents(
-                init_functions,
+                [Document(page_content=json.dumps(f), metadata={"index": i}) for i,f in enumerate(init_functions)],
                 self.embeddings,
             )
             self.vector_store.save_local(name)
         self.vs_name = name
         self.vs_retriever = self.vector_store.as_retriever()
-        self.documents = 0
+        self.documents = len(init_functions)
     
     def add_functions(self, function_list: list[dict]):
 
@@ -75,7 +75,6 @@ class CustomMultiQueryRetriever(MultiQueryRetriever):
     CustomMultiQueryRetriever is a wrapper around MultiQueryRetriever that allows for easy addition of functions and queries
     '''
     def __init__(self, openai_key: str, name: str, init_functions: list[dict]):
-        self.vector_store = VectorStoreRetriever(openai_key, name, init_functions)
         prompt_obj = PromptTemplate(
             input_variables=["question"],
             template="""You are an AI language model assistant. Your task is to break down
@@ -103,20 +102,21 @@ class CustomMultiQueryRetriever(MultiQueryRetriever):
             Now solve the following question
             Original question: {question}""",
         )
+        vector_store = VectorStoreRetriever(openai_key, name, init_functions)
         llm_chat_obj = ChatOpenAI(
             openai_api_key=openai_key,
             temperature=0
         )
         output_parser_obj = LineListOutputParser()
-        self.llm_chain = LLMChain(llm=llm_chat_obj, prompt=prompt_obj, output_parser=output_parser_obj)
+        llm_chain = LLMChain(llm=llm_chat_obj, prompt=prompt_obj, output_parser=output_parser_obj)
         super().__init__(
-            retriever=self.vector_store.get_retriever(),
-            llm_chain = self.llm_chain,
+            retriever=vector_store.get_retriever(),
+            llm_chain = llm_chain,
             parser_key='lines'
         )
     
     def add_functions(self, function_list: list[dict]):
-        self.vector_store.add_functions(function_list)
+        self.retriever.add_functions(function_list)
     
     def find_functions(self, query: str):
         docs = super().get_relevant_documents(query)

@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Vector Cache
+*.faiss
+*.pkl
+
 # C extensions
 *.so
 

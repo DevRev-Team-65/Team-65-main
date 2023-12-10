@@ -2,6 +2,10 @@ from openai_retrievers import CustomMultiQueryRetriever
 from prompting import ChainOfThoughtComposer
 from config import openai_key
 from functions import devrev_functions
+import logging
+
+logging.basicConfig()
+logging.getLogger().setLevel(logging.INFO)
 
 # Create the retriever
 retriever = CustomMultiQueryRetriever(
