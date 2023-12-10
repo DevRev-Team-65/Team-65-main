@@ -52,8 +52,8 @@ class VectorStoreRetriever:
         except:
             #no local store
             self.vector_store = FAISS.from_documents(
-                [Document(page_content=json.dumps(f), metadata={"index": i}) for i,f in enumerate(init_functions)],
-                self.embeddings,
+                init_functions,
+                self.embeddings
             )
             self.vector_store.save_local(name)
         self.vs_name = name
@@ -88,11 +88,6 @@ class CustomMultiQueryRetriever(MultiQueryRetriever):
             possible. The number of steps should be less, but not lesser than neccessary.
             Your goal is to have the task broken down into simpler atomic steps.
             
-            Example question: Summarize work items similar to don:core:dvrv-us-1:devo/0:issue/1
-            Example answer:
-            1. What are the work items similar to don:core:dvrv-us-1:devo/0:issue/1?
-            2. Summarize the work items recieved from #1
-            
             Example question: Prioritize my P0 issues and add them to the current sprint
             Example answer:
             1. Get my id
@@ -100,10 +95,6 @@ class CustomMultiQueryRetriever(MultiQueryRetriever):
             3. Prioritize my P0 issues from #2
             4. Get the current sprint id
             5. Add issues from #2 to the sprint from #4
-
-            Example question: What is the meaning of life?
-            Example answer:
-            1. Find the meaning of life
 
             Now solve the following question
             Original question: {question}""",
@@ -132,22 +123,21 @@ class CustomContextualCompressionRetriever(ContextualCompressionRetriever):
     '''
     CustomContextualCompressionRetriever is a wrapper around ContextualCompressionRetriever that allows for easy addition of functions and queries
     '''
-    def __init__(self, openai_key: str):
-        self.vector_store = VectorStoreRetriever(openai_key)
+    def __init__(self, openai_key: str, name: str, init_functions: list[dict]):
+        vector_store = VectorStoreRetriever(openai_key, name, init_functions)
         llm = OpenAI(
             openai_api_key=openai_key,
             temperature=0
         )
         compressor = LLMChainExtractor.from_llm(llm)
-
         super().__init__(
-            retriever=self.vector_store.get_retriever(),
-            compressor=compressor,
+            base_retriever=vector_store.get_retriever(),
+            base_compressor=compressor,
             parser_key='lines'
         )
     
     def add_functions(self, function_list: list[dict]):
-        self.vector_store.add_functions(function_list)
+        self.retriever.add_functions(function_list)
     
     def find_functions(self, query: str):
         docs = super().get_relevant_documents(query)

@@ -1,28 +1,5 @@
 example_queries = [
     (
-        "Summarize issues similar to don:core:dvrv-us-1:devo/0:issue/1",
-        """[
-            {
-                "tool_name": "get_similar_work_items",
-                "arguments": [
-                    {
-                        "argument_name": "work_id",
-                        "argument_value": "don:core:dvrv-us-1:devo/0:issue/1"
-                    }
-                ]
-            },
-            {
-                "tool_name": "summarize_objects",
-                "arguments": [
-                    {
-                        "argument_name": "objects",
-                        "argument_value": "$$PREV[0]"
-                    }
-                ]
-            }
-        ]"""
-    ),
-    (
         "What is the meaning of life?",
         "[]"
     ),
@@ -239,6 +216,29 @@ example_queries = [
                     {
                         "argument_name": "objects",
                         "argument_value": "$$PREV[1]"
+                    }
+                ]
+            }
+        ]"""
+    ),
+    (
+        "Summarize issues similar to don:core:dvrv-us-1:devo/0:issue/1",
+        """[
+            {
+                "tool_name": "get_similar_work_items",
+                "arguments": [
+                    {
+                        "argument_name": "work_id",
+                        "argument_value": "don:core:dvrv-us-1:devo/0:issue/1"
+                    }
+                ]
+            },
+            {
+                "tool_name": "summarize_objects",
+                "arguments": [
+                    {
+                        "argument_name": "objects",
+                        "argument_value": "$$PREV[0]"
                     }
                 ]
             }

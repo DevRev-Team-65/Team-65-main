@@ -5,7 +5,7 @@ from langchain.chains import LLMChain
 from langchain.chat_models import ChatOpenAI
 
 examples = "".join(
-    [f"Query: {query}\nOutput: {output}\n" for query, output in example_queries]
+    [f"Query: {query}\nOutput: {output}\n" for query, output in example_queries[:3]]
 )
 
 class ChainOfThoughtComposer(LLMChain):
