@@ -40,6 +40,12 @@ class VectorStoreRetriever:
         self.embeddings = OpenAIEmbeddings(
             openai_api_key=openai_key,
         )
+
+        self.documents = 0
+        for i,f in enumerate(init_functions):
+            init_functions[i] = Document(page_content=json.dumps(f), metadata={"index": self.documents})
+            self.documents += 1
+
         #create a vector store
         try:
             self.vector_store.load_local(name)
