@@ -40,7 +40,7 @@ class VectorStoreRetriever:
         self.embeddings = OpenAIEmbeddings(
             openai_api_key=openai_key,
         )
-
+    
         self.documents = 0
         for i,f in enumerate(init_functions):
             init_functions[i] = Document(page_content=json.dumps(f), metadata={"index": self.documents})
@@ -48,7 +48,7 @@ class VectorStoreRetriever:
 
         #create a vector store
         try:
-            self.vector_store.load_local(name)
+            self.vector_store = FAISS.load_local(name, self.embeddings)
         except:
             #no local store
             self.vector_store = FAISS.from_documents(

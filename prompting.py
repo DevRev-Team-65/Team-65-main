@@ -94,7 +94,6 @@ class ChainOfThoughtComposer(LLMChain):
             {
                 "query": query,
                 "functions": functions,
-                "examples": examples,
-                '\n                "tool_name"': '\n                "tool_name"',
+                "examples": examples
             }
         )
