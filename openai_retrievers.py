@@ -40,6 +40,12 @@ class VectorStoreRetriever:
         self.embeddings = OpenAIEmbeddings(
             openai_api_key=openai_key,
         )
+
+        self.documents = 0
+        for i,f in enumerate(init_functions):
+            init_functions[i] = Document(page_content=json.dumps(f), metadata={"index": self.documents})
+            self.documents += 1
+
         #create a vector store
         try:
             self.vector_store.load_local(name)
@@ -76,6 +82,7 @@ class CustomMultiQueryRetriever(MultiQueryRetriever):
     '''
     def __init__(self, openai_key: str, name: str, init_functions: list[dict]):
         self.vector_store = VectorStoreRetriever(openai_key, name, init_functions)
+
         prompt_obj = PromptTemplate(
             input_variables=["question"],
             template="""You are an AI language model assistant. Your task is to break down
