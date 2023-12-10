@@ -24,6 +24,9 @@ composer = ChainOfThoughtComposer(
 if __name__ == '__main__':
     while True:
         query = input('Enter a query: ')
-        functions = retriever.find_functions(query)
-        answer = composer(query=query, functions=functions)
-        print(answer)
+        try:
+            functions = retriever.find_functions(query)
+            answer = composer(query=query, functions=functions)
+            print(answer['text'])
+        except Exception as e:
+            print(e)
