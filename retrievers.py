@@ -44,7 +44,7 @@ class LlamaIndexRetriever:
             init_functions[i] = Document(page_content=json.dumps(f), metadata={"index": self.documents})
             self.documents += 1
         llm = OpenAI(
-            api_key=openai_key,
+            openai_api_key=openai_key,
             temperature=0
         )
         service_context = ServiceContext.from_defaults(llm=llm)
