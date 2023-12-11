@@ -29,7 +29,6 @@ class Verifier(LLMChain):
             '''
         )
         super().__init__(
-            output_parser=BooleanOutputParser,
             llm=chat_llm,
             prompt=prompt_obj
         )
