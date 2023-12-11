@@ -1,2 +1,16 @@
-# LLM+P
-Solution of the problem statement using the LLM+P (LLM and planning) prompting technique
+# LLM+P (experiment)
+
+This repository contains the code used to test the LLM+P prompting technique as a potential solution for our problem statement. 
+
+# Methodology of the technique - 
+
+
+
+# Analysis -
+
+# Sample results - 
+
+# Bibliography
+
+source paper - 
+source code - 
