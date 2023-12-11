@@ -407,8 +407,4 @@ devrev_functions = [
             "required": []
         }
     }
-
-
-
-
 ]
