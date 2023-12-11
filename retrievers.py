@@ -11,6 +11,8 @@ from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import LLMChainExtractor
 from langchain.prompts import PromptTemplate
+from llama_index import VectorStoreIndex, ServiceContext
+from llama_index.llms import OpenAI
 
 class LineList(BaseModel):
     '''
@@ -31,6 +33,38 @@ class LineListOutputParser(PydanticOutputParser):
         return LineList(lines=lines)
 
 ## Classess for the retrievers
+
+class LlamaIndexRetriever:
+    '''
+    LlamaIndexRetriever is a wrapper around VectorStoreIndex that allows for easy addition of functions and queries
+    '''
+    def __init__(self, openai_key: str, name: str, init_functions: list[dict]):
+        self.documents = 0
+        for i,f in enumerate(init_functions):
+            init_functions[i] = Document(page_content=json.dumps(f), metadata={"index": self.documents})
+            self.documents += 1
+        llm = OpenAI(
+            api_key=openai_key,
+            temperature=0
+        )
+        service_context = ServiceContext.from_defaults(llm=llm)
+        self.index = VectorStoreIndex.from_documents(
+            init_functions,
+            service_context=service_context
+        )
+        self.vs_name = name
+        self.query_engine = self.index.as_query_engine()
+    
+    def add_functions(self, function_list: list[dict]):
+        for i,f in enumerate(function_list):
+            function_list[i] = Document(page_content=json.dumps(f), metadata={"index": self.documents})
+            self.documents += 1
+        self.index.add_documents(function_list)
+        self.index.save_local(self.vs_name)
+    
+    def find_functions(self, query: str):
+        response = self.query_engine.query(query)
+        return response
 
 class VectorStoreRetriever:
     '''
@@ -61,13 +95,10 @@ class VectorStoreRetriever:
         self.documents = len(init_functions)
     
     def add_functions(self, function_list: list[dict]):
-
         for i,f in enumerate(function_list):
             function_list[i] = Document(page_content=json.dumps(f), metadata={"index": self.documents})
             self.documents += 1
-
         self.vector_store.add_documents(function_list)
-
         self.vector_store.save_local(self.vs_name)
     
     def find_functions(self, query: str):
