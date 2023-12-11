@@ -6,10 +6,10 @@ OpenAI api keys are stored in the `openai.txt` file. You can use your own OpenAI
 List of all available important tools and arguments are stored in `functions.txt`. If you want to add your own new functions you can add it by editing the file.
 
 
-# Methadology
+# Methodology
 Recursion of Thought is an approach in problem-solving that involves breaking down complex tasks into smaller subproblems and recursively solving them to derive the final solution.
 
-# Local setup (Installing dependancies)
+# Local setup (Installing dependencies)
  `pip install -r requirements.txt`
 
 # Run the following command to answer your query
