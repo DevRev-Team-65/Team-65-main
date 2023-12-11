@@ -2,7 +2,9 @@
 The repository contains the code used to test Recursion of Thought prompting technique as a potential solution for our problem statement
 
 OpenAI api keys are stored in the `openai.txt` file. You can use your own OpenAI api key by modifying the file
+
 List of all available important tools and arguments are stored in `functions.txt`. If you want to add your own new functions you can add it by editing the file.
+
 
 # Methadology
 Recursion of Thought is an approach in problem-solving that involves breaking down complex tasks into smaller subproblems and recursively solving them to derive the final solution.
