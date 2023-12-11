@@ -58,5 +58,4 @@ dataset_csv['input'] = input
 dataset_csv['data_source'] = ''
 dataset_csv.to_json(path_or_buf='dataset_train.json', indent=4, orient='records')
 dataset_csv.to_csv('dataset_train.csv', index=False)
-dataset_csv
 
