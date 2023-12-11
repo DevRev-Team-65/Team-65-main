@@ -29,5 +29,5 @@ def llm_plus_p_function(query):
     #     ]
     # )
 
-    return response['choices'][0]['message']['content']
+    return response.choices[0].message.content
 

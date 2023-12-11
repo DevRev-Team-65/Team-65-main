@@ -10,7 +10,6 @@ The problem PDDL file to this problem is:
     (tool_used ?t - tool)
     (argument_of ?a - tool ?arg - object)
     (tool_argument_value ?arg - object)
-    (previous_result ?prev - object)
   )
 
   ;; Actions
@@ -31,8 +30,7 @@ The problem PDDL file to this problem is:
     )
     :effect (and
       (tool_used works_list)
-      (argument_of works_list (issue.priority p0) (owned_by ?prev))
-      (previous_result ?prev)
+      (argument_of works_list (issue.priority p0) (owned_by $$PREV[0]))
     )
   )
 
@@ -40,13 +38,11 @@ The problem PDDL file to this problem is:
     :parameters ()
     :precondition (and
       (tool_used works_list)
-      (argument_of works_list (issue.priority p0) (owned_by ?prev))
-      (previous_result ?prev)
+      (argument_of works_list (issue.priority p0) (owned_by $$PREV[0]))
     )
     :effect (and
       (tool_used prioritize_objects)
-      (argument_of prioritize_objects (objects ?prev))
-      (previous_result ?prev)
+      (argument_of prioritize_objects (objects $$PREV[1]))
     )
   )
 
@@ -63,14 +59,13 @@ The problem PDDL file to this problem is:
     :parameters ()
     :precondition (and
       (tool_used prioritize_objects)
-      (argument_of prioritize_objects (objects ?prev))
+      (argument_of prioritize_objects (objects $$PREV[1]))
       (tool_used get_sprint_id)
       (argument_of get_sprint_id)
     )
     :effect (and
       (tool_used add_work_items_to_sprint)
-      (argument_of add_work_items_to_sprint (work_ids ?prev) (sprint_id ?prev))
-      (previous_result ?prev)
+      (argument_of add_work_items_to_sprint (work_ids $$PREV[2]) (sprint_id $$PREV[3]))
     )
   )
 )
