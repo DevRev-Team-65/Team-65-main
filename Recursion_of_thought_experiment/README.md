@@ -54,74 +54,41 @@ Subproblem 3 does not require further division and can be solved directly using 
 
 The final answer is the prioritized list of work items associated with 'Rev-789,' which are tickets that need a response, and summarized.
 
-
-"[
-
+```
+[
     {
-    
         ""tool_name"": ""works_list"",
-        
         ""arguments"": [
-        
             {
-            
                 ""argument_name"": ""ticket.rev_org"",
-                
                 ""argument_value"": ""Rev-789""
-                
             }
-            
         ]
-        
     },
-    
     {
-    
         ""tool_name"": ""works_list"",
-        
         ""arguments"": [
-        
             {
-            
                 ""argument_name"": ""ticket.needs_response"",
-                
                 ""argument_value"": true
-                
             },
-            
             {
-            
                 ""argument_name"": ""objects"",
-                
                 ""argument_value"": ""$$PREV[0]""
-                
             }
-            
         ]
-        
     },
-    
     {
-    
         ""tool_name"": ""summarize_objects"",
-        
         ""arguments"": [
-        
             {
-            
                 ""argument_name"": ""objects"",
-                
                 ""argument_value"": ""$$PREV[1]""
-                
             }
-            
         ]
-        
     }
-    
 ]
-
-"
+```
 
 # Bibliography
 [Source Paper](https://arxiv.org/abs/2306.06891)
