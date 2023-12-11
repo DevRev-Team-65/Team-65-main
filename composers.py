@@ -4,16 +4,11 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.chat_models import ChatOpenAI
 
-examples = "".join(
-    [f"Query: {query}\nOutput: {output}\n" for query, output in example_queries[:3]]
-)
 
 class ChainOfThoughtComposer(LLMChain):
     def __init__(
             self,
-            openai_api_key: str,
-            temperature: float = 0.0,
-            max_tokens: int = 1000
+            chat_llm: ChatOpenAI
         ):
         prompt_obj = PromptTemplate(
             input_variables=["query", "functions", "examples"],
@@ -74,22 +69,12 @@ class ChainOfThoughtComposer(LLMChain):
             {query}
             """
         )
-        llm_chat_obj = ChatOpenAI(
-            openai_api_key=openai_api_key,
-            temperature=temperature,
-            max_tokens=max_tokens
-        )
         super().__init__(
-            llm=llm_chat_obj,
+            llm=chat_llm,
             prompt=prompt_obj
         )
-        # super().__init__(
-        #     llm=llm_chat_obj,
-        #     prompt=prompt_obj,
-        #     output_parser=ToolOutputParser()
-        # )
     
-    def __call__(self, query: str, functions: list[dict]):
+    def __call__(self, query: str, functions: list[dict], examples):
         return super().__call__(
             {
                 "query": query,

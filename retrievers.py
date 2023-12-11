@@ -4,15 +4,12 @@ from langchain.chains import LLMChain
 from langchain.output_parsers import PydanticOutputParser
 from langchain.vectorstores import FAISS
 from langchain.schema import Document
-from langchain.chat_models import ChatOpenAI
-from langchain.llms import OpenAI
-from langchain.embeddings import OpenAIEmbeddings
 from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import LLMChainExtractor
 from langchain.prompts import PromptTemplate
 from llama_index import VectorStoreIndex, ServiceContext
-from llama_index.llms import OpenAI
+from llama_index.llms import OpenAI as OpenAILM
 
 class LineList(BaseModel):
     '''
@@ -43,7 +40,7 @@ class LlamaIndexRetriever:
         for i,f in enumerate(init_functions):
             init_functions[i] = Document(page_content=json.dumps(f), metadata={"index": self.documents})
             self.documents += 1
-        llm = OpenAI(
+        llm = OpenAILM(
             api_key=openai_key,
             temperature=0
         )
@@ -70,12 +67,9 @@ class VectorStoreRetriever:
     '''
     VectorStore is a wrapper around FAISS that allows for easy addition of functions and queries
     '''
-    def __init__(self, openai_key: str, name: str, init_functions: list[dict]):
-        self.embeddings = OpenAIEmbeddings(
-            openai_api_key=openai_key,
-        )
-
-        self.init_functions = init_functions.copy()
+    def __init__(self, embeddings, name: str, init_functions: list[dict]):
+        self.embeddings = embeddings
+        self.init_functions = init_functions
         self.documents = 0
         for i,f in enumerate(init_functions):
             self.init_functions[i] = Document(page_content=json.dumps(f), metadata={"index": self.documents})
@@ -112,7 +106,7 @@ class CustomMultiQueryRetriever(MultiQueryRetriever):
     '''
     CustomMultiQueryRetriever is a wrapper around MultiQueryRetriever that allows for easy addition of functions and queries
     '''
-    def __init__(self, openai_key: str, name: str, init_functions: list[dict]):
+    def __init__(self, chat_llm, embeddings, name: str, init_functions: list[dict]):
         name = "mqr_" + name
         prompt_obj = PromptTemplate(
             input_variables=["question"],
@@ -131,13 +125,9 @@ class CustomMultiQueryRetriever(MultiQueryRetriever):
             Now solve the following question
             Original question: {question}""",
         )
-        vector_store = VectorStoreRetriever(openai_key, name, init_functions)
-        llm_chat_obj = ChatOpenAI(
-            openai_api_key=openai_key,
-            temperature=0
-        )
+        vector_store = VectorStoreRetriever(embeddings, name, init_functions)
         output_parser_obj = LineListOutputParser()
-        llm_chain = LLMChain(llm=llm_chat_obj, prompt=prompt_obj, output_parser=output_parser_obj)
+        llm_chain = LLMChain(llm=chat_llm, prompt=prompt_obj, output_parser=output_parser_obj)
         super().__init__(
             retriever=vector_store.get_retriever(),
             llm_chain = llm_chain,
@@ -155,13 +145,9 @@ class CustomContextualCompressionRetriever(ContextualCompressionRetriever):
     '''
     CustomContextualCompressionRetriever is a wrapper around ContextualCompressionRetriever that allows for easy addition of functions and queries
     '''
-    def __init__(self, openai_key: str, name: str, init_functions: list[dict]):
+    def __init__(self, llm, embeddings, name: str, init_functions: list[dict]):
         name = "ccr_" + name
-        vector_store = VectorStoreRetriever(openai_key, name, init_functions)
-        llm = OpenAI(
-            openai_api_key=openai_key,
-            temperature=0
-        )
+        vector_store = VectorStoreRetriever(embeddings, name, init_functions)
         compressor = LLMChainExtractor.from_llm(llm)
         super().__init__(
             base_retriever=vector_store.get_retriever(),
