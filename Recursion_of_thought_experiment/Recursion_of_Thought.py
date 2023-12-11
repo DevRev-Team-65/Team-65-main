@@ -24,7 +24,7 @@ client = OpenAI(api_key=read_api_key_from_file())
 
 prompt=f"""You need to answer the given query by giving an output in JSON format of the tools, argument names, argument values which are needed to solve the query.If the query cannot be solved by the list of tools I provide then outout an empty list.
 The following is the list of tools,argument names,descriptions,examples etc. Understand the functionality of each tool and argument:
-{examples()}
+{functions()}
 
 
 To reference the value of the ith tool in the chain, use $$PREV[i] as argument value. i =
@@ -32,7 +32,7 @@ To reference the value of the ith tool in the chain, use $$PREV[i] as argument v
 If the query could not be answered with the given set of tools, output an empty list instead.
 
   Sample queries and their outputs:
-  {functions()}
+  {examples()}
 
 The output is in JSON format. This is my problem statement.""" 
 reasoning = """Example:Now if the query is "Retrieve work items associated with the Rev organisation 'REV-123' and owned by the user 'DEVU-789' , Summarize them and prioritize by severity.",
