@@ -40,10 +40,11 @@ class VectorStoreRetriever:
         self.embeddings = OpenAIEmbeddings(
             openai_api_key=openai_key,
         )
-    
+
+        self.init_functions = init_functions.copy()
         self.documents = 0
         for i,f in enumerate(init_functions):
-            init_functions[i] = Document(page_content=json.dumps(f), metadata={"index": self.documents})
+            self.init_functions[i] = Document(page_content=json.dumps(f), metadata={"index": self.documents})
             self.documents += 1
 
         #create a vector store
@@ -52,7 +53,7 @@ class VectorStoreRetriever:
         except:
             #no local store
             self.vector_store = FAISS.from_documents(
-                init_functions,
+                self.init_functions,
                 self.embeddings
             )
             self.vector_store.save_local(name)
