@@ -245,3 +245,15 @@ example_queries = [
         ]"""
     )
 ]
+
+example_str = "".join(
+    [
+        f"""
+        Query:
+        {query}
+        Answer:
+        {functions}
+        """
+        for query, functions in example_queries[:4]
+    ]
+)

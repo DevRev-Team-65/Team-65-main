@@ -4,6 +4,10 @@ import json
 import os
 import time
 
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
+from langchain.chat_models import ChatOpenAI
+    
 DATA_PATH = './data'
 import logging
 
@@ -55,11 +59,7 @@ class TreeofThoughts:
         if len(values) < window_size:
             return np.mean(values) if values else 0
         else:
-            return max(np.mean(values[-window_size:]), 0.1)
-
-
-
-######################  
+            return max(np.mean(values[-window_size:]), 0.1) 
 
 class TreeofThoughtsBFS(TreeofThoughts):
     def solve(self, initial_prompt, num_thoughts, max_steps, max_states, value_threshold, pruning_threshold=0.5):
@@ -106,9 +106,6 @@ class TreeofThoughtsBFS(TreeofThoughts):
         except Exception as e:
             logger.error(f"Error in tot_bfs: {e}")
             return None
-
-
-###########
 
 class TreeofThoughtsDFS(TreeofThoughts):
     def solve(self, initial_prompt, num_thoughts, max_steps, value_threshold, pruning_threshold=0.5):
@@ -268,7 +265,6 @@ class MonteCarloTreeofThoughts(TreeofThoughts):
             "metrics": {"thoughts": {}, "evaluations": {}},
         }
 
-
     def optimize_params(self, num_thoughts, max_steps, max_states):
         if self.objective == 'speed':
             num_thoughts = max(1, num_thoughts - 1)
@@ -304,10 +300,8 @@ class MonteCarloTreeofThoughts(TreeofThoughts):
             num_thoughts,
             max_steps,
             max_states,
-            pruning_threshold,
-            # sleep_time,
+            pruning_threshold
         )
-#v3
     def monte_carlo_search(self,
                         initial_prompt: str,
                         num_thoughts: int,
@@ -364,3 +358,7 @@ class MonteCarloTreeofThoughts(TreeofThoughts):
             self.save_tree_to_json(self.file_name)
         solution = self.model.generate_solution(initial_prompt, best_state)
         return solution if solution else best_state
+
+class TreeOfThoughtComposer:
+    def __init__(self, llm_obj):
+        self.mctt_
