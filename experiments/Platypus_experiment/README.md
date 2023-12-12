@@ -4,11 +4,11 @@ The Platypus models are a series of fine-tuned and merged variants based on the 
 
 All base models are available via HuggingFace: [`garage-bAInd`](https://huggingface.co/garage-bAInd)
 
-This Technique was used to fine tune [Llama-2-13b](https://huggingface.co/meta-llama/Llama-2-13b-hf) with 1k data entries, for our problem statement. For dataset and generation techniques, refer the data folder.
+This Technique was used to fine-tune [Llama-2-13b](https://huggingface.co/meta-llama/Llama-2-13b-hf) with 1k data entries, for our problem statement. For dataset and generation techniques, refer to the data folder.
 
 ## Local Setup
 
-This repository is multi-GPU friendly, and provides code to use model or data parellelism, depending on your computational resources. 
+This repository is multi-GPU friendly and provides code to use model or data parallelism, depending on your computational resources. 
 
 1. Install dependencies
 
