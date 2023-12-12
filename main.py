@@ -9,7 +9,7 @@ from langchain.chat_models import ChatOpenAI
 import os
 import logging
 from datetime import datetime
-
+from langchain.callbacks import get_openai_callback
 # Library Requirements
 from src.retrievers import (
     VectorStoreRetriever,
@@ -69,7 +69,7 @@ with st.spinner("Initializing Components...."):
         temperature=0.7,
     )
 
-    cmq_ret = CustomMultiQueryRetriever(
+    retriever = CustomMultiQueryRetriever(
         chat_llm,
         embeddings=hf_embeddings,
         name = "cmq_ret_01",
@@ -81,13 +81,14 @@ with st.spinner("Initializing Components...."):
     )
 
 def run_query(query_str: str):
-    retrieved_simfunc = cmq_ret.find_functions(query_str)
-    answer = composer(
-        query=query_str,
-        functions=retrieved_simfunc,
-        examples=example_str
-    )
-    return answer['text']
+    with get_openai_callback() as cb: #for tracking usage
+        retrieved_simfunc = retriever.find_functions(query_str)
+        answer = composer(
+            query=query_str,
+            functions=retrieved_simfunc,
+            examples=example_str
+        )
+    return answer['text'], cb
 ### STREAMLIT UI ###
 
 with st.form('Chat'):
@@ -98,5 +99,12 @@ with st.form('Chat'):
             st.warning("Please enter a valid OpenAI API Key")
         elif submit:
             with st.spinner("Thinking..."):
-                json_res = run_query(text)
+                json_res, usage = run_query(text)
             st.json(json_res)
+            st.sidebar.info(f"""
+            Usage Info:
+                Total Tokens: {usage.total_tokens}
+                Prompt Tokens: {usage.prompt_tokens}
+                Completion Tokens: {usage.completion_tokens}
+                Total Cost: ${usage.total_cost}
+            """)
