@@ -48,7 +48,7 @@ No changes were made to the print_tree method.
 
 
 # Documentation
-TreeofThoughts Class
+TreeofThoughts Class : 
 The TreeofThoughts class is designed to solve problems using a tree-based search algorithm. It takes a model and a search algorithm (either 'BFS' or 'DFS') as input and provides methods to solve problems using the chosen algorithm.
 
 ## Initialization
