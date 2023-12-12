@@ -10,3 +10,8 @@
 3) The generated queries and JSON schemas were manually inspected for inaccuracies and rectified.
 4) The generated queries and JSON schemas were added to the final dataset.
 
+- **Bonus data**:
+  1) Tools were created for applications rewarding bonus points.
+  2) These tools were fed to ChatGPT (GPT-3.5) after being converted to a suitable prompt.
+  3) The generated queries and JSON schemas were manually inspected for inaccuracies and rectified.
+  4) The generated queries and JSON schemas were added to the final dataset.
