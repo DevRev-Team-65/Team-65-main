@@ -102,7 +102,7 @@ with st.form('Chat'):
                 json_res, usage = run_query(text)
             st.json(json_res)
             st.sidebar.info(f"""
-            Usage Info:
+            Usage Info for this query:
                 Total Tokens: {usage.total_tokens}
                 Prompt Tokens: {usage.prompt_tokens}
                 Completion Tokens: {usage.completion_tokens}
