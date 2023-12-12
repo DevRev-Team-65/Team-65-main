@@ -3,7 +3,7 @@ The repository contains the code used to test Recursion of Thought prompting tec
 
 OpenAI api keys are stored in the `openai.txt` file. You can use your own OpenAI api key by modifying the file
 
-List of all available important tools and arguments are stored in `functions.txt`. If you want to add your own new functions you can add it by editing the file.
+List of all available important tools and arguments are stored in `functions.py`. If you want to add your own new functions you can add it by editing the file.
 
 
 # Methodology
