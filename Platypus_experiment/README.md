@@ -124,8 +124,9 @@ The combination of a specialized dataset, innovative fine-tuning techniques, and
 
 ## Sample Results
 
-Instruction: Search for objects related to the customer CustomerABC and create action items from the search results.
-Response: [
+##### Instruction: Search for objects related to the customer CustomerABC and create action items from the search results.
+
+##### Response: [
   {
     "tool_name": "search",
     "arguments": [
@@ -145,8 +146,9 @@ Response: [
     ]
   }
 ]
-Instruction: Find all work items in the testing stage that are related to parts PART-1 and PART-2 and summarize them.
-Response: [
+##### Instruction: Find all work items in the testing stage that are related to parts PART-1 and PART-2 and summarize them.
+
+##### Response: [
   {
     "tool_name": "search",
     "arguments": [
