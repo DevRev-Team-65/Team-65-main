@@ -4,7 +4,7 @@ This repository contains the code used to test the PAL technique as a potential 
 
 ### Usage of this repository - 
 
-Put your openai api key into openai_key.txt. 
+From the pal directory run setup.py to install PAL.
 
 Install the necessary libraries - 
 
