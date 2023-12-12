@@ -1,21 +1,16 @@
 from openai import OpenAI
 import functions
 
-def read_api_key_from_file(file_path='openai.txt'):
+def read_api_key_from_file(file_path='Recursion_of_thought_experiment/openai.txt'):
     with open(file_path, 'r') as file:
         api_key = file.read().strip()
     return api_key
 
-def examples(file_path='example_queries.txt'):
+def examples(file_path='Recursion_of_thought_experiment/example_queries.txt'):
     with open(file_path, 'r') as file:
       return file.read()
 
-def functions(file_path='functions.txt'):
-    with open(file_path, 'r') as file:
-      return file.read()
-
-
-def rot(query)
+def rot(query):
  client = OpenAI(api_key=read_api_key_from_file())
  
  prompt=f"""You need to answer the given query by giving an output in JSON format of the tools, argument names, argument values which are needed to solve the query.If the query cannot be solved by the list of tools I provide then outout an empty list.
@@ -99,7 +94,7 @@ def rot(query)
  
  Now follow the same approach,after looking at the example above and answer the query. Refer to the sample queries and the outputs I had given.
  Give the final output in json format. """
- add = f"{args.query}. I would like u to follow the steps through which the problem can be solved like the example above and reach the end output."
+ add = f"{query}. I would like u to follow the steps through which the problem can be solved like the example above and reach the end output."
  tup = (prompt,reasoning,add)
  prompt_final = ' '.join(tup)
  
