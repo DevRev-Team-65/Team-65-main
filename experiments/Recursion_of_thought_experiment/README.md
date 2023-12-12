@@ -114,4 +114,7 @@ The lengths of the Chain of Thought (CoT) can rapidly expand with the complexity
 However, the introduction of recursive processes and multiple contexts may incur computational overhead. While RoT demonstrates effectiveness in solving complex problems, it is crucial to consider the potential impact on computational resources, especially when dealing with large-scale reasoning tasks.
 
 ## Bibliography
-[Source Paper](https://arxiv.org/abs/2306.06891)
+Source paper- [Recursion of Thought: A Divide-and-Conquer Approach
+to Multi-Context Reasoning with Language Models
+](https://arxiv.org/abs/2306.06891)
+Source code- [https://github.com/soochan-lee/RoT](https://github.com/soochan-lee/RoT)
