@@ -1,22 +1,28 @@
 # Recursion-of-Thought:
-The repository contains the code used to test Recursion of Thought prompting technique as a potential solution for our problem statement
+
+This folder contains the code used to test the Recursion of Thought prompting technique as a potential solution for our problem statement.
 
 
-# OpenAI integration
+#### OpenAI integration:
+
 To access OpenAI's API, the necessary API keys are stored in the 'openai.txt' file. Users can integrate their own OpenAI API key by modifying this file.
 
 
-# Tool and Argument Documentation:
+#### Tool and Argument Documentation:
+
 The comprehensive list of essential tools and arguments is documented in the 'functions.py' file. To extend functionality, users have the flexibility to introduce new functions by editing this file.
 
 
-# Methodology
+## Methodology
+
 Recursion of Thought is an approach in problem-solving that involves breaking down complex tasks into smaller subproblems and recursively solving them to derive the final solution.
 
-# Local setup (Installing dependencies)
+## Local setup (Installing dependencies)
+
  `pip install -r requirements.txt`
 
-# Solving the query using rot function
+## Solving the query using ``` rot ``` function
+
  Customize the query below to suit the reporting needs.
  ```
 from Recursion_of_thought_experiment.Recursion_of_Thought import rot
@@ -24,7 +30,7 @@ query = "Retrieve work items associated with the Rev organization Rev-789 and ti
 rot(query)
 ```
 
-# Sample result:
+## Sample result:
 ```
 1. Divide the problem into subproblems:
 
@@ -85,8 +91,8 @@ json
 ]
 ```
 
-# Analysis
+## Analysis
 The evaluation of the Recursion of Thought methodology reveals a systematic and structured problem-solving technique. The breakdown of complex tasks into manageable subproblems, as illustrated in the sample result, demonstrates a clear and effective recursive approach. The use of explicit GO and STOP tokens enhances comprehension and aids in tracking the recursive process.
 
-# Bibliography
+## Bibliography
 [Source Paper](https://arxiv.org/abs/2306.06891)
