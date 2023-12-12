@@ -38,7 +38,9 @@ that is used to explore the solution space.
 
 
 ## Analysis
-Tree-of-Thought (ToT) Prompting is an innovative technique that builds upon the principles of the Tree-of-Thoughts framework and expands the capabilities of the well-known Chain-of-Thought prompting concept. Adopting this approach, empowers Large Language Models, such as ChatGPT, and Bard to demonstrate advanced reasoning abilities. The Tree-of-Thought Prompting technique enables these models to autonomously rectify errors and continuously accumulate knowledge, resulting in enhanced performance and improved decision-making. Tree of thought gives the best accuracy of all the methods and even solves queries which involves some additional logic like combining the outputs of various functions, like mathematical operations, iterations, conditional logic etc and solves the bonus task. The only downside is it makes a lot of requests and consumes high number of tokens.
+Tree-of-Thought (ToT) Prompting is an innovative technique that builds upon the principles of the Tree-of-Thoughts framework and expands the capabilities of the well-known Chain-of-Thought prompting concept. Adopting this approach, empowers Large Language Models, such as ChatGPT, and Bard to demonstrate advanced reasoning abilities. The Tree-of-Thought Prompting technique enables these models to autonomously rectify errors and continuously accumulate knowledge, resulting in enhanced performance and improved decision-making. Tree of thought gives the best accuracy of all the methods and even solves queries which involves some additional logic like combining the outputs of various functions, like mathematical operations, iterations, conditional logic etc and solves the bonus task. 
+
+The only downside is it makes a lot of requests and consumes high number of tokens, which made it unfeasible for our problem. 
 
 
 ## Sample Result
