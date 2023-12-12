@@ -108,7 +108,10 @@ json
 ```
 
 ## Analysis
-The evaluation of the Recursion of Thought methodology reveals a systematic and structured problem-solving technique. The breakdown of complex tasks into manageable subproblems, as illustrated in the sample result, demonstrates a clear and effective recursive approach. The use of explicit GO and STOP tokens enhances comprehension and aids in tracking the recursive process.
+The lengths of the Chain of Thought (CoT) can rapidly expand with the complexity of a problem, often surpassing the maximum context size. Recursion of Thought (RoT), can address this challenge. RoT introduces several special tokens that the models can output to trigger context-related operations.This allows the model to break down a problem into different contexts, offering a more versatile approach to handling complex tasks. RoT demonstrates a remarkable enhancement in LLMs' reasoning capabilities. By introducing special tokens and recursive context control, the technique enables models to break down complex problems into manageable segments. This results in improved accuracy in solving problems with reasoning steps extending beyond the traditional context limits.
+
+
+However, the introduction of recursive processes and multiple contexts may incur computational overhead. While RoT demonstrates effectiveness in solving complex problems, it is crucial to consider the potential impact on computational resources, especially when dealing with large-scale reasoning tasks.
 
 ## Bibliography
 [Source Paper](https://arxiv.org/abs/2306.06891)
