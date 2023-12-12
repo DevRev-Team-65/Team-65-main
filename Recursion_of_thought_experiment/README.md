@@ -5,7 +5,7 @@ This folder contains the code used to test the Recursion of Thought prompting te
 
 #### OpenAI integration:
 
-To access OpenAI's API, the necessary API keys are stored in the 'openai.txt' file. Users can integrate their own OpenAI API key by modifying this file.
+To access OpenAI's API, integrate your OpenAI key in openai.txt file
 
 
 #### Tool and Argument Documentation:
