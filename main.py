@@ -6,6 +6,9 @@ import os
 import streamlit as st
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.chat_models import ChatOpenAI
+import os
+import logging
+from datetime import datetime
 
 # Library Requirements
 from src.retrievers import (
@@ -19,15 +22,18 @@ from src.composers import (
 from src.functions import devrev_functions
 from src.examples import example_queries
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
-# # Load the environment variables from the .env file
-# load_dotenv()
+# Create the logs folder if it doesn't exist
+logs_folder = "logs"
+os.makedirs(logs_folder, exist_ok=True)
 
-# # Fetch the openai_api_key from the environment variables
-# try:
-#     openai_api_key = os.getenv("OPENAI_API_KEY")
-# except:
-#     raise Exception("Please set the OPENAI_API_KEY environment variable or create a .env file with the key.")
+# Set up the logging configuration
+log_file = os.path.join(logs_folder, f"log_{datetime.now().strftime('%Y-%m-%d')}.txt")
+logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Rest of the code...
 
 st.title("AI Agent 007")
 
