@@ -15,7 +15,7 @@ Run the PAL_trial_1.ipynb file for results.
 
 # Methodology of the technique - 
 
-![image](https://github.com/DevRev-Team-65/Team-65-main/assets/69185383/7807a29f-baee-46c5-b367-1b3371f6b551)
+![image](images/image.png)
 
 PAL is an approach that combines the power of large language models (LLMs) with programmatic reasoning to solve complex tasks. 
 
