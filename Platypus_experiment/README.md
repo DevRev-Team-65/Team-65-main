@@ -121,3 +121,52 @@ The models' ability to handle STEM and logic tasks effectively positions them as
 4. Contributions to the Field
 Platypus contributes to the ongoing advancements in Large Language Models by optimizing training time, computational resources, and model performance.
 The combination of a specialized dataset, innovative fine-tuning techniques, and strategic model merging positions Platypus at the forefront of LLM development.
+
+## Sample Results
+
+### Instruction: Search for objects related to the customer CustomerABC and create action items from the search results.
+### Response: [
+  {
+    "tool_name": "search",
+    "arguments": [
+      {
+        "argument_name": "customer",
+        "argument_value": "CustomerABC"
+      }
+    ]
+  },
+  {
+    "tool_name": "action_item",
+    "arguments": [
+      {
+        "argument_name": "objects",
+        "argument_value": "$$PREV[0]"
+      }
+    ]
+  }
+]
+### Instruction: Find all work items in the testing stage that are related to parts PART-1 and PART-2 and summarize them.
+### Response: [
+  {
+    "tool_name": "search",
+    "arguments": [
+      {
+        "argument_name": "stage",
+        "argument_value": "testing"
+      },
+      {
+        "argument_name": "related_to",
+        "argument_value": "$$PREV[0]"
+      }
+    ]
+  },
+  {
+    "tool_name": "summarize",
+    "arguments": [
+      {
+        "argument_name": "objects",
+        "argument_value": "$$PREV[1]"
+      }
+    ]
+  }
+]
