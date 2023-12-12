@@ -15,7 +15,12 @@ from langchain.agents.output_parsers import ReActJsonSingleInputOutputParser
 from langchain.agents.format_scratchpad import format_log_to_str
 from pydantic import BaseModel, Field
 
-openai_api_key='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'
+def read_api_key_from_file(file_path):
+    with open(file_path, 'r') as file:
+        api_key = file.read().strip()
+    return api_key
+
+openai_api_key = read_api_key_from_file('openai_key.txt')
 os.environ['OPENAI_API_KEY'] = openai_api_key
 prompt = hub.pull("hwchase17/react-json")
 

@@ -72,11 +72,11 @@ agent = (
     | chat_model_with_stop
     | ReActJsonSingleInputOutputParser()
 )
-agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, return_intermediate_steps=True)
-print('Query = ')
-query = input()
-response = agent_executor.invoke(
-    {
-        "input": query
-    }
-)
+agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True, return_intermediate_steps=True, handle_parsing_errors=True)
+
+def ReAct_function(query):
+    response = agent_executor.invoke(
+        {
+            "input": query
+        }
+    )

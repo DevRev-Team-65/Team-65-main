@@ -2,7 +2,12 @@ from openai import OpenAI
 import os
 from prompt_creater import prompt_creater
 
-openai_api_key = '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'
+def read_api_key_from_file(file_path):
+    with open(file_path, 'r') as file:
+        api_key = file.read().strip()
+    return api_key
+
+openai_api_key = read_api_key_from_file('openai_key.txt')
 
 def llm_plus_p_function(query):
     prompt = prompt_creater(query)
