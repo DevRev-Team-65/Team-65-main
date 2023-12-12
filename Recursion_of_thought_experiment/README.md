@@ -1,9 +1,13 @@
 # Recursion-of-Thought:
 The repository contains the code used to test Recursion of Thought prompting technique as a potential solution for our problem statement
 
-OpenAI api keys are stored in the `openai.txt` file. You can use your own OpenAI api key by modifying the file
 
-List of all available important tools and arguments are stored in `functions.py`. If you want to add your own new functions you can add it by editing the file.
+# OpenAI integration
+To access OpenAI's API, the necessary API keys are stored in the 'openai.txt' file. Users can integrate their own OpenAI API key by modifying this file.
+
+
+# Tool and Argument Documentation:
+The comprehensive list of essential tools and arguments is documented in the 'functions.py' file. To extend functionality, users have the flexibility to introduce new functions by editing this file.
 
 
 # Methodology
@@ -13,10 +17,11 @@ Recursion of Thought is an approach in problem-solving that involves breaking do
  `pip install -r requirements.txt`
 
 # Solving the query using rot function
- To ask your own custom query, write your custom query within quotes in the rot function
+ Customize the query below to suit the reporting needs.
  ```
 from Recursion_of_thought_experiment.Recursion_of_Thought import rot
-rot("Retrieve work items associated with the Rev organization Rev-789 and tickets that need a response, and create a summary.")
+query = "Retrieve work items associated with the Rev organization Rev-789 and tickets that need a response, and create a summary."
+rot(query)
 ```
 
 # Sample result:
@@ -79,5 +84,9 @@ json
   }
 ]
 ```
+
+# Analysis
+The evaluation of the Recursion of Thought methodology reveals a systematic and structured problem-solving technique. The breakdown of complex tasks into manageable subproblems, as illustrated in the sample result, demonstrates a clear and effective recursive approach. The use of explicit GO and STOP tokens enhances comprehension and aids in tracking the recursive process.
+
 # Bibliography
 [Source Paper](https://arxiv.org/abs/2306.06891)
