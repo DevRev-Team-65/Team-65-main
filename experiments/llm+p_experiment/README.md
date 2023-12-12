@@ -4,7 +4,7 @@ This repository contains the code used to test the LLM+P prompting technique as 
 
 ### Usage of this repository - 
 
-Put your openai api key into openai_key.txt. 
+Put your openai API key into openai_key.txt. 
 
 Install the necessary libraries - 
 
@@ -16,7 +16,7 @@ Run the main.ipynb file for results.
 
 ![Alt text](images/image.png)
 
-The planning domain definition language (PDDL) serves as a standardized encoding of classical planning problems. The PDDL representation of a planning problem P is separated into two files: a domain file and a problem file. The domain PDDL file provides a lifted representation of the underlying rules of the world. It includes a set of predicates that define the state space S and the actions (i.e., A ) with their preconditions and effects (i.e., the transition function f). The problem PDDL file provides a list of objects to ground the domain, the problem’s initial state s init and goal conditions S G. There exists a rich set of symbolic planners that implement efficient search algorithms to solve planning problems formalized in PDDL. In this work, we aim to take a natural language prompt which describes the initial states init and goal conditions S G, formulate it in PDDL, and leverage symbolic planners to output correct plans. We assume the domain rules are available.
+The planning domain definition language (PDDL) serves as a standardized encoding of classical planning problems. The PDDL representation of a planning problem P is separated into two files: a domain file and a problem file. The domain PDDL file provides a lifted representation of the underlying rules of the world. It includes a set of predicates that define the state space S and the actions (i.e., A ) with their preconditions and effects (i.e., the transition function f). The problem PDDL file provides a list of objects to ground the domain, the problem’s initial state s init and goal conditions S G. There exists a rich set of symbolic planners that implement efficient search algorithms to solve planning problems formalized in PDDL. In this work, we aim to take a natural language prompt that describes the initial states init and goal conditions S G, formulate it in PDDL, and leverage symbolic planners to output correct plans. We assume the domain rules are available.
 
 There are 3 parts in the methodology used - 
 
@@ -36,9 +36,9 @@ agent is provided with a minimal example that demonstrates what an example probl
 
 LLM+P works well for simpler cases of our problem statement, but fails to decipher complex logic, and also fails to decipher logical statements and conditional logic, in the case of bonus points. 
 
-LLM+P method also consumes a lot of tokens (Large language model api calls) for the purpose of our problem statement. 
+LLM+P method also consumes a lot of tokens (Large language model API calls) for our problem statement. 
 
-But, LLM+P is suprisingly good in deciphering accurate logic and due to the PDDL language's logical structure, it never gives inconsistent output. 
+But, LLM+P is surprisingly good at deciphering accurate logic and due to the PDDL language's logical structure, it never gives inconsistent output. 
 
 # Sample results - 
 
