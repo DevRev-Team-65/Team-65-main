@@ -27,8 +27,7 @@ class CustomMultiQueryRetriever(MultiQueryRetriever):
     '''
     CustomMultiQueryRetriever is a wrapper around MultiQueryRetriever that allows for easy addition of functions and queries
     '''
-    def __init__(self, chat_llm, embeddings, name: str, init_functions: list[dict]):
-        name = "mqr_" + name
+    def __init__(self, chat_llm, vector_store):
         prompt_obj = PromptTemplate(
             input_variables=["question"],
             template="""Your task is to break down the question into a list different steps.
@@ -46,7 +45,6 @@ class CustomMultiQueryRetriever(MultiQueryRetriever):
             Now solve the following question
             Original question: {question}""",
         )
-        vector_store = VectorStoreRetriever(embeddings, name, init_functions)
         output_parser_obj = LineListOutputParser()
         llm_chain = LLMChain(llm=chat_llm, prompt=prompt_obj, output_parser=output_parser_obj)
         super().__init__(
@@ -54,9 +52,6 @@ class CustomMultiQueryRetriever(MultiQueryRetriever):
             llm_chain = llm_chain,
             parser_key='lines'
         )
-    
-    def add_functions(self, function_list: list[dict]):
-        self.retriever.add_functions(function_list)
     
     def find_functions(self, query: str):
         docs = super().get_relevant_documents(query)

@@ -1,9 +1,6 @@
-# Core requirements
-import os
-# from dotenv import load_dotenv
-
 # Framework Requirements
 import streamlit as st
+import json
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.chat_models import ChatOpenAI
 import os
@@ -13,8 +10,7 @@ from langchain.callbacks import get_openai_callback
 # Library Requirements
 from src.retrievers import (
     VectorStoreRetriever,
-    CustomMultiQueryRetriever,
-    CustomContextualCompressionRetriever
+    CustomMultiQueryRetriever
 )
 from src.composers import (
     ChainOfThoughtComposer
@@ -69,16 +65,40 @@ with st.spinner("Initializing Components...."):
         temperature=0.7,
     )
 
+    vector_store = VectorStoreRetriever(
+        hf_embeddings,
+        name = "vs_ret_01",
+        init_functions=devrev_functions.copy()
+    )
+
     retriever = CustomMultiQueryRetriever(
         chat_llm,
-        embeddings=hf_embeddings,
-        name = "cmq_ret_01",
-        init_functions=devrev_functions.copy()
+        vector_store=vector_store
     )
 
     composer = ChainOfThoughtComposer(
         chat_llm=chat_llm,
     )
+
+### Sidebar
+with st.sidebar.form('Add Function'):
+    function_name = st.text_input("Function Name")
+    function_description = st.text_area("Function Description")
+    function_params = st.text_area("Function Parameters")
+    submit = st.form_submit_button('Submit')
+    if submit:
+        if function_name and function_description and function_params:
+            function_dict = {
+                "name": function_name,
+                "description": function_description,
+                "code": json.loads(function_params)
+            }
+            vector_store.add_functions([function_dict])
+            st.success("Function Added")
+        else:
+            st.warning("Please fill in all the fields")
+
+
 
 def run_query(query_str: str):
     with get_openai_callback() as cb: #for tracking usage
