@@ -4,6 +4,9 @@ This repository contains the code used to test the LLM+P prompting technique as 
 ### Usage of this repository 
 Please refer the documentation for detailed guidance on utilizing the functionalities provided by this repository. The documentation outlines instructions on how to effectively use the repository, including comprehensive information on its features and functionalities. 
 
+### OpenAI Integration
+To access OpenAI's API, the necessary API keys are stored in the 'openai.txt' file. Users can integrate their own OpenAI API key by modifying this file
+
 ## Using MonteCarlo Tot approach to solve a query
 `pip install -r requirements.txt`
 
