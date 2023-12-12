@@ -10,7 +10,7 @@ Install the necessary libraries -
 
 `pip install -r requirements.txt`
 
-Run the main.ipynb file for results. 
+Run the PAL_trial_1.ipynb file for results. 
 
 
 # Methodology of the technique - 
