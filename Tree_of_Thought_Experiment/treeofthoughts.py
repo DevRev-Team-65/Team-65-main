@@ -1,5 +1,3 @@
-#thought -> evaluated value (0.4, This solution is invalid because x) -> thought prompt + this solution is invalid because + better eval
-
 import json
 import os
 import time
@@ -13,9 +11,9 @@ from queue import PriorityQueue
 from typing import Any, Dict, Union
 
 import numpy as np
-from tree_of_thoughts.models.abstract_language_model import AbstractLanguageModel
+from model.abstract_language_model import AbstractLanguageModel
 
-from tree_of_thoughts.text_generation_web_ui import (
+from text_generation_web_ui import (
     build_text_generation_web_ui_client_llm,
     ui_default_parameters,
 )
@@ -99,18 +97,7 @@ class TreeofThoughtsBFS(TreeofThoughts):
                                 self.logNewState(state, value)
                                 logger.debug(f"State Values: {state_values}")
 
-            # if state_values:
-            #     highest_rated_solution = max(state_values.items(), key=lambda x: x[1])
-            #     print(f"highest rated solution: {highest_rated_solution}")
-            #     highest_rated_state = highest_rated_solution[0]  # Use a different name to avoid confusion
-            #     print(f'highest rated state: {highest_rated_state}')
-            #     try:
-            #         solution = self.model.generate_solution(initial_prompt, highest_rated_state)
-            #     except Exception as e:
-            #         logger.error(f"Error in generating solution: {e}")
-            #         solution = None  # Set a fallback value for solution
-
-            #     return solution if solution is not None else highest_rated_state  # Return highest rated state if solution is None
+            return solution if solution is not None else highest_rated_state  # Return highest rated state if solution is None
             if state_values:
                 highest_rated_solution = max(state_values.items(), key=lambda x: x[1])
                 highest_rated_state = highest_rated_solution[0]  
@@ -162,8 +149,6 @@ class TreeofThoughtsDFS(TreeofThoughts):
             return None
 
 
-#v2 => best first search => explores state space of the quality of the states
-#priority que or greedy BFS
 class TreeofThoughtsBEST:
     def __init__(self, model):
         self.model = model
