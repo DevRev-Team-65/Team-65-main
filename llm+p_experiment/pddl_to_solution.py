@@ -1,6 +1,6 @@
 import re
 
-def pddl_to_solution_function():
+def pddl_to_solution_function(pddl_code):
      solution = []
 
      encoded_tasks = pddl_code.split(':action')[1:]
@@ -20,5 +20,4 @@ def pddl_to_solution_function():
                     decoded_task['arguments'].append(argument)
                
           solution.append(decoded_task)
-
      return solution
