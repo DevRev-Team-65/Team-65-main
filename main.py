@@ -103,8 +103,8 @@ with st.form('Chat'):
             st.json(json_res)
             st.sidebar.info(f"""
             Usage Info for this query:
-                Total Tokens: {usage.total_tokens}
-                Prompt Tokens: {usage.prompt_tokens}
-                Completion Tokens: {usage.completion_tokens}
+                Total Tokens: {usage.total_tokens}\n
+                Prompt Tokens: {usage.prompt_tokens}\n
+                Completion Tokens: {usage.completion_tokens}\n
                 Total Cost: ${usage.total_cost}
             """)
