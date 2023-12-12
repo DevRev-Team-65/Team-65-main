@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import re
 
 DATA_PATH = './data'
 import logging
@@ -21,6 +22,7 @@ from text_generation_web_ui import (
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+logging.disable(logging.CRITICAL)
 
 
 class TreeofThoughts:
@@ -273,7 +275,7 @@ class MonteCarloTreeofThoughts(TreeofThoughts):
         }
 
 
-    def optimize_params(self, num_thoughts, max_steps, max_states):
+    def optimize_params(self, num_thoughts=1, max_steps=3, max_states=3):
         if self.objective == 'speed':
             num_thoughts = max(1, num_thoughts - 1)
             max_steps = max(1, max_steps - 1)
@@ -296,14 +298,14 @@ class MonteCarloTreeofThoughts(TreeofThoughts):
 
     def solve(self,
               initial_prompt: str,
-              num_thoughts: int,
-              max_steps: int,
-              max_states: int,
-              pruning_threshold: float,
+              num_thoughts: int = 1,
+              max_steps: int = 3,
+              max_states: int = 3,
+              pruning_threshold: float = 0.5,
             #   sleep_time: float,
               ):
         self.file_name = "logs/tree_of_thoughts_output_montecarlo.json"
-        return self.monte_carlo_search(
+        solution =  self.monte_carlo_search(
             initial_prompt,
             num_thoughts,
             max_steps,
@@ -311,13 +313,25 @@ class MonteCarloTreeofThoughts(TreeofThoughts):
             pruning_threshold,
             # sleep_time,
         )
+        result_string = str(solution[0])
+        json_pattern = re.compile(r'```json(.*?)```', re.DOTALL)
+        # Search for the pattern in the string
+        match = re.search(json_pattern, result_string)
+        # If a match is found, extract the JSON part
+        if match:
+          json_part = match.group(1).strip()
+        else:
+          print("No JSON part found.")
+        print(json_part)
+
+
 #v3
     def monte_carlo_search(self,
                         initial_prompt: str,
-                        num_thoughts: int,
-                        max_steps: int,
-                        max_states: int,
-                        pruning_threshold: float,
+                        num_thoughts: int =  1,
+                        max_steps: int = 3,
+                        max_states:int =  3,
+                        pruning_threshold:float =  0.5,
                         ):
         current_states = [initial_prompt]
         state_values = {}
