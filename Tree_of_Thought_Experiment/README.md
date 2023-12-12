@@ -2,7 +2,7 @@
 This repository contains the code used to test the LLM+P prompting technique as a potential solution for our problem statement
 
 ### Usage of this repository 
-Please refer the documentation for detailed guidance on utilizing the functionalities provided by this repository. The documentation outlines instructions on how to effectively use the repository, including comprehensive information on its features and functionalities. 
+Please refer to the documentation for detailed guidance on utilizing the functionalities provided by this repository. The documentation outlines instructions on how to effectively use the repository, including comprehensive information on its features and functionalities. 
 
 ### OpenAI Integration
 To access OpenAI's API, the necessary API keys are stored in the 'openai.txt' file. Users can integrate their own OpenAI API key by modifying this file
@@ -18,11 +18,11 @@ MonteCarloToT(query)
 ```
 
 ## Methodology
-ToT maintains a tree of thoughts, where thoughts represent coherent language sequences that serve as intermediate steps toward solving a problem. This approach enables an LM to self evaluate the progress intermediate thoughts make towards solving a problem through a deliberate reasoning process. The LM's ability to generate and evaluate thoughts is then combined with search algorithms (e.g., breadth-first search and depth-first search) to enable systematic exploration of thoughts with lookahead and backtracking. It follows the following steps -
+ToT maintains a tree of thoughts, where thoughts represent coherent language sequences that serve as intermediate steps toward solving a problem. This approach enables an LM to self-evaluate the progress intermediate thoughts make towards solving a problem through a deliberate reasoning process. The LM's ability to generate and evaluate thoughts is then combined with search algorithms (e.g., breadth-first search and depth-first search) to enable systematic exploration of thoughts with lookahead and backtracking. It follows the following steps -
 
 
 ### 1. Thought decomposition 
-Unlike CoT prompting, ToT explicitly decomposes a problem into intermediate steps or thoughts, which are combined together to form a solution to the underlying problem. Depending on the problem, this decomposition can take a variety of different forms, such as outputting a few words or a single line of an equation.
+Unlike CoT prompting, ToT explicitly decomposes a problem into intermediate steps or thoughts, which are combined to form a solution to the underlying problem. Depending on the problem, this decomposition can take a variety of different forms, such as outputting a few words or a single line of an equation.
 
 
 ### 2. Thought generation  
@@ -37,11 +37,11 @@ Once we have defined our thoughts and chosen how they will be generated, we need
 #### 1. Value: 
 independently assign a scalar value (i.e., rating from 1-10) or classification (i.e., sure, likely, or impossible to reach a solution) to each state.
 #### 2. Vote: 
-compare different solutions and select the one that is most promising.
+compare different solutions and select the most promising one.
 
 Although both approaches can work well, voting is best when a successful solution
 to a problem is hard to directly value (e.g., creative writing tasks). In both cases,
-the LLM can be prompted multiple times in a manner similar to self-consistency to
+the LLM can be prompted multiple times like self-consistency to
 achieve more reliable evaluations of each state.
 
 ### Search algorithm 
@@ -50,9 +50,9 @@ that is used to explore the solution space.
 
 
 ## Analysis
-Tree-of-Thought (ToT) Prompting is an innovative technique that builds upon the principles of the Tree-of-Thoughts framework and expands the capabilities of the well-known Chain-of-Thought prompting concept. Adopting this approach, empowers Large Language Models, such as ChatGPT, and Bard to demonstrate advanced reasoning abilities. The Tree-of-Thought Prompting technique enables these models to autonomously rectify errors and continuously accumulate knowledge, resulting in enhanced performance and improved decision-making. Tree of thought gives the best accuracy of all the methods and even solves queries which involves some additional logic like combining the outputs of various functions, like mathematical operations, iterations, conditional logic etc and solves the bonus task. 
+Tree-of-Thought (ToT) Prompting is an innovative technique that builds upon the principles of the Tree-of-Thoughts framework and expands the capabilities of the well-known Chain-of-Thought prompting concept. Adopting this approach, empowers Large Language Models, such as ChatGPT, and Bard to demonstrate advanced reasoning abilities. The Tree-of-Thought Prompting technique enables these models to autonomously rectify errors and continuously accumulate knowledge, resulting in enhanced performance and improved decision-making. Tree of thought gives the best accuracy of all the methods and even solves queries that involve some additional logic like combining the outputs of various functions, like mathematical operations, iterations, conditional logic etc and solves the bonus task. 
 
-The only downside is it makes a lot of requests and consumes high number of tokens, which made it unfeasible for our problem. 
+The only downside is it makes a lot of requests and consumes a high number of tokens, which makes it unfeasible for our problem. 
 
 
 ## Sample Result
