@@ -1,4 +1,4 @@
-from models.openai_model import OpenAILanguageModel, OptimizedOpenAILanguageModel
+from model.openai_models import OpenAILanguageModel, OptimizedOpenAILanguageModel
 from treeofthoughts import TreeofThoughts, MonteCarloTreeofThoughts, TreeofThoughtsBFS, TreeofThoughtsDFS, TreeofThoughtsBEST, TreeofThoughtsASearch
 from model.abstract_language_model import AbstractLanguageModel
 
