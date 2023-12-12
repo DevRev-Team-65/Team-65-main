@@ -1,41 +1,78 @@
-# AI Agent 007
+# AI Agent 007 Overview
 
-AI Agent 007 is a Streamlit application that uses OpenAI's GPT-3 model to answer queries based on a set of predefined functions. It uses the Langchain library for embeddings and chat models.
+![Query Retrieval](img/cover.png)
+
+**AI Agent 007** is a powerful Streamlit application designed to leverage OpenAI's GPT-3 model for answering queries based on a predefined set of functions. The application utilizes the Langchain library, incorporating embeddings and chat models to enhance its capabilities.
 
 ## Installation
 
 1. Clone the repository.
-2. Install the requirements using pip:
-    ```
+2. Install the required dependencies using pip:
+
+    ```bash
     pip install -r requirements.txt
     ```
 
-## Usage
+## Application Composition
 
-1. Run the Streamlit app:
-    ```
-    streamlit run main.py
-    ```
+The application is structured with a user-friendly interface and robust backend components:
 
-2. Open the provided local URL in your web browser.
+### Framework Requirements
 
-3. Enter your OpenAI API Key in the sidebar. The key should start with "sk-".
+- **Streamlit:** Provides the interactive web interface.
+- **json:** Used for handling JSON data.
+- **langchain:** Incorporates Langchain library for embeddings and chat models.
+- **os:** Handles operating system functionalities.
+- **logging:** Implements logging for tracking and debugging.
+- **datetime:** Manages date and time-related operations.
 
-4. Enter your query in the text area and click 'Submit'.
+### Library Requirements
 
-The application will use the `CustomMultiQueryRetriever` to find functions that are similar to the query. Then, it will use the `ChainOfThoughtComposer` to generate an answer based on the query and the retrieved functions.
+- **VectorStoreRetriever:** Retrieves functions based on vector embeddings.
+- **CustomMultiQueryRetriever:** Utilizes the chat model to break queries into multiple parts.
+- **ChainOfThoughtComposer:** Composes answers using a chain of thought approach.
+- **devrev_functions:** Predefined functions for initialization.
+- **example_queries:** Example queries for testing.
 
-After submitting a query, the application will display the response in JSON format. It will also display usage information in the sidebar, including the total number of tokens used, the number of prompt tokens, the number of completion tokens, and the total cost.
+### Usage
 
-## Components
+1. **OpenAI API Key:** Enter your OpenAI API Key in the sidebar.
+2. **Function Addition:** Use the sidebar form to add custom functions.
+    - Enter the function name, description, and parameters.
+    - Click 'Submit' to add the function.
+3. **Chat Interface:** Input queries in the designated text area and click 'Submit'.
+4. **Response Display:** View the JSON response and usage information in the main window.
 
-- `HuggingFaceEmbeddings`: This is used to generate embeddings for the functions.
-- `ChatOpenAI`: This is a chat model from the Langchain library that uses OpenAI's GPT-3 model.
-- `CustomMultiQueryRetriever`: This is used to find functions that are similar to the query.
-- `ChainOfThoughtComposer`: This is used to generate an answer based on the query and the retrieved functions.
+### Application Workflow
 
-For more details and extensive documentation refer to [library README.md](#Documentation)
+1. **Initialization:**
+    - The application initializes the Langchain chat model and retriever components.
+    - Functions are loaded from the `devrev_functions` dataset.
+
+2. **User Interaction:**
+    - Users can add custom functions through the sidebar form.
+    - Queries are entered into the chat interface.
+
+3. **Processing:**
+    - The application employs the `CustomMultiQueryRetriever` to find functions similar to the query.
+    - The `ChainOfThoughtComposer` is then used to generate an answer based on the query and retrieved functions.
+
+4. **Results Display:**
+    - The JSON response is displayed in the main window.
+    - Usage information, including token counts and cost, is shown in the sidebar.
+
+## Usage Demonstrations
+
+### Query Retrieval
+
+![Query Retrieval](img/eg1.png)
+![Query Retrieval](img/eg2.png)
+![Query Retrieval](img/eg3.png)
+
+1. Input your query in the designated text area.
+2. Click 'Submit' to initiate the query processing.
+3. View the JSON response and usage information displayed in the main window and sidebar, respectively.
 
 ## Note
 
-Please ensure that you have a valid OpenAI API Key to use this application. The key should start with "sk-".
+Ensure that you have a valid OpenAI API Key to use this application. The key should start with "sk-".
