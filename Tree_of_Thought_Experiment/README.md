@@ -1,5 +1,5 @@
 # Tree-of-Thought
-This repository contains the code used to test the LLM+P prompting technique as a potential solution for our problem statement
+This repository contains the code used to test the ToT prompting technique as a potential solution for our problem statement
 
 ### Usage of this repository 
 Please refer the documentation for detailed guidance on utilizing the functionalities provided by this repository. The documentation outlines instructions on how to effectively use the repository, including comprehensive information on its features and functionalities. 
