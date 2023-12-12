@@ -81,3 +81,8 @@ Finally, run the following:
 ```
 python3 -m fastchat.serve.cli --model-path garage-bAInd/Platypus-30B --conv-template alpaca
 ```
+# Bibliography
+
+source paper - [Platypus: Quick, Cheap, and Powerful Refinement of LLMs](https://arxiv.org/pdf/2308.07317v1.pdf)
+
+source code - [https://github.com/arielnlee/Platypus](https://github.com/arielnlee/Platypus)
