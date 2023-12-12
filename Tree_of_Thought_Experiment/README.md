@@ -1,6 +1,10 @@
 # Tree-of-Thought
 This repository contains the code used to test the LLM+P prompting technique as a potential solution for our problem statement
 
+### Usage of this repository 
+Please refer the documentation for detailed guidance on utilizing the functionalities provided by this repository. The documentation outlines instructions on how to effectively use the repository, including comprehensive information on its features and functionalities. 
+
+
 ## Methodology
 ToT maintains a tree of thoughts, where thoughts represent coherent language sequences that serve as intermediate steps toward solving a problem. This approach enables an LM to self evaluate the progress intermediate thoughts make towards solving a problem through a deliberate reasoning process. The LM's ability to generate and evaluate thoughts is then combined with search algorithms (e.g., breadth-first search and depth-first search) to enable systematic exploration of thoughts with lookahead and backtracking. It follows the following steps -
 
