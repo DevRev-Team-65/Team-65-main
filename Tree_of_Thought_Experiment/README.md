@@ -1,48 +1,109 @@
-# Comprehensive Documentation and Changelog
-This document provides a comprehensive overview of the changes made to the TreeofThoughts class and its methods to improve readability and understandability. The changes include updating variable names to be more meaningful and descriptive, as well as modifying the structure of the code for better readability.
+# Tree-of-Thought
+This repository contains the code used to test the LLM+P prompting technique as a potential solution for our problem statement
 
-## Changelog
-1. TreeofThoughts Class
-Updated the class definition to include a more descriptive docstring.
-2. __init__ Method
-No changes were made to the __init__ method.
-3. solve Method
-Updated variable names:
-x -> initial_prompt
-k -> num_thoughts
-T -> max_steps
-b -> max_states
-vth -> value_threshold
-4. tot_bfs Method
-Updated variable names:
-x -> initial_prompt
-k -> num_thoughts
-T -> max_steps
-b -> max_states
-S0 -> current_states
-S0_t -> generated_states
-Vt -> state_values
-St -> selected_states
-5. tot_dfs Method
-Updated variable names:
+## Methodology
+ToT maintains a tree of thoughts, where thoughts represent coherent language sequences that serve as intermediate steps toward solving a problem. This approach enables an LM to self evaluate the progress intermediate thoughts make towards solving a problem through a deliberate reasoning process. The LM's ability to generate and evaluate thoughts is then combined with search algorithms (e.g., breadth-first search and depth-first search) to enable systematic exploration of thoughts with lookahead and backtracking. It follows the following steps -
 
-x -> initial_prompt
-k -> num_thoughts
-T -> max_steps
-vth -> value_threshold
-s -> state
-t -> step
-s_prime -> next_state
-child -> child_state
 
-### Added optional parameters for better control over the search process:
-pruning_threshold
-confidence_threshold
-max_iterations
-convergence_threshold
-convergence_count
-6. save_tree_to_json Method
-No changes were made to the save_tree_to_json method.
-7. print_tree Method
-No changes were made to the print_tree method.
+### 1. Thought decomposition 
+Unlike CoT prompting, ToT explicitly decomposes a problem into intermediate steps or thoughts, which are combined together to form a solution to the underlying problem. Depending on the problem, this decomposition can take a variety of different forms, such as outputting a few words or a single line of an equation.
 
+
+### 2. Thought generation  
+Once we have decided what will constitute a thought, we need to determine how thoughts should be generated during ToT prompting. Two basic techniques for thought generation are proposed:
+#### a) Sampling: generating several thoughts independently with the same prompt
+#### b) Proposing: generating several thoughts sequentially with a “propose prompt
+The sampling approach works best when the thought space is rich, as several independently-generated thoughts are unlikely to be duplicates. If the thought space is more constrained, then the proposing technique can be used to generate several thoughts while avoiding duplicates.
+
+
+### 3. State evaluation  
+Once we have defined our thoughts and chosen how they will be generated, we need to define a heuristic for evaluating the quality of certain chains of thought. Otherwise, there is no way to know whether we are making progress towards a final solution. Given several thoughts that have been generated, an LLM is used to reason about the quality of each thought. In particular, two different strategies are followed:
+#### 1. Value: 
+independently assign a scalar value (i.e., rating from 1-10) or classification (i.e., sure, likely, or impossible to reach a solution) to each state.
+#### 2. Vote: 
+compare different solutions and select the one that is most promising.
+
+Although both approaches can work well, voting is best when a successful solution
+to a problem is hard to directly value (e.g., creative writing tasks). In both cases,
+the LLM can be prompted multiple times in a manner similar to self-consistency to
+achieve more reliable evaluations of each state.
+
+### Search algorithm 
+The final component of ToT prompting is the search algorithm
+that is used to explore the solution space.
+
+
+## Analysis
+Tree-of-Thought (ToT) Prompting is an innovative technique that builds upon the principles of the Tree-of-Thoughts framework and expands the capabilities of the well-known Chain-of-Thought prompting concept. Adopting this approach, empowers Large Language Models, such as ChatGPT, and Bard to demonstrate advanced reasoning abilities. The Tree-of-Thought Prompting technique enables these models to autonomously rectify errors and continuously accumulate knowledge, resulting in enhanced performance and improved decision-making. Tree of thought gives the best accuracy of all the methods and even solves queries which involves some additional logic like combining the outputs of various functions, like mathematical operations, iterations, conditional logic etc and solves the bonus task. The only downside is it makes a lot of requests and consumes high number of tokens.
+
+
+## Sample Result
+1. Search for objects related to ProductABC, retrieve work items related to the search results, and then add them to the current sprint.
+```
+[
+  {
+    "tool_name": "search_object_by_name",
+    "arguments": [
+      {
+        "argument_name": "query",
+        "argument_value": "ProductABC"
+      }
+    ]
+  },
+  {
+    "tool_name": "works_list",
+    "arguments": [
+      {
+        "argument_name": "applies_to_part",
+        "argument_value": ["$$PREV[0]"]
+      }
+    ]
+  },
+  {
+    "tool_name": "get_sprint_id",
+    "arguments": []
+  },
+  {
+    "tool_name": "add_work_items_to_sprint",
+    "arguments": [
+      {
+        "argument_name": "work_ids",
+        "argument_value": ["$$PREV[1]"]
+      },
+      {
+        "argument_name": "sprint_id",
+        "argument_value": "$$PREV[2]"
+      }
+    ]
+  }
+]
+```
+
+2. Retrieve all issue work items that need a response and are associated with the Rev organization REV-789
+```
+  [
+    {
+        "tool_name": "works_list",
+        "arguments": [
+            {
+                "argument_name": "ticket.needs_response",
+                "argument_value": true
+            },
+            {
+                "argument_name": "ticket.rev_org",
+                "argument_value": "REV-789"
+            },
+            {
+                "argument_name": "type",
+                "argument_value": "issue"
+            }
+        ]
+    }
+]
+```
+
+
+## Bibliography
+[source-paper](https://arxiv.org/pdf/2305.10601.pdf)
+
+[source-code](https://github.com/kyegomez/tree-of-thoughts)
