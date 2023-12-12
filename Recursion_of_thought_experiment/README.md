@@ -15,7 +15,23 @@ The comprehensive list of essential tools and arguments is documented in the 'fu
 
 ## Methodology
 
-Recursion of Thought is an approach in problem-solving that involves breaking down complex tasks into smaller subproblems and recursively solving them to derive the final solution.
+Recursion of Thought is an approach in problem-solving that involves breaking down complex tasks into smaller subproblems and recursively solving them to derive the final solution. There are 4 parts in the methodology used: 
+
+### 1. Problem Definition and Context:
+The methodology begins with defining the problem or query that requires a solution. Each problem is formulated to include the main question (Q) and the expected answer sequence (A).
+
+
+### 2. Special Tokens and Context Division:
+RoT introduces special tokens, namely GO, STOP, and THINK, to guide the LLM in generating recursive intermediate steps. The GO and STOP tokens mark the start and end of a problem sequence, while THINK initiates a recursion procedure. These tokens facilitate the division of the problem into multiple contexts, allowing the model to handle problems exceeding the maximum context size.
+
+
+### 3. Inference and Context Generation:
+The LLM is tasked with inferring the probability of the next token given a sequence (p(xi+1 | X1:i)). The inference process involves generating contexts (X) based on the concatenation of the main question (Q), subproblems (Qsub,), and their corresponding answers (Asub,). The recursive context control allows the model to create multiple contexts by producing special tokens, effectively dividing the problem into manageable segments.
+
+
+### 4. Recursive Problem-Solving:
+During the inference process, the LLM solves multiple subproblems by generating sub-questions (Qsub,) and their respective answers (Asub,). The key innovation lies in the use of the THINK token, which triggers a recursive process, separating the sub-question into a new context. If the new context is a base case, the answer is produced directly; otherwise, the model recursively solves more subproblems.
+
 
 ## Local setup (Installing dependencies)
 
