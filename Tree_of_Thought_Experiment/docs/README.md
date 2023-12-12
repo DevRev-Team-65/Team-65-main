@@ -1,3 +1,25 @@
+# Documentation
+TreeofThoughts Class
+The TreeofThoughts class is designed to solve problems using a tree-based search algorithm. It takes a model and a search algorithm (either 'BFS' or 'DFS') as input and provides methods to solve problems using the chosen algorithm.
+
+## Initialization
+The __init__ method initializes the TreeofThoughts class with the given model and search algorithm. It also initializes an empty tree structure to store the search results.
+
+## Solve Method
+The solve method is the main entry point for solving problems using the TreeofThoughts class. It takes the following parameters:
+
+initial_prompt: The initial problem or prompt to be solved.
+num_thoughts: The number of thoughts to generate at each step.
+max_steps: The maximum number of steps to perform in the search.
+max_states: The maximum number of states to consider at each step (for BFS).
+value_threshold: The threshold value for pruning states (for DFS).
+timeout: The maximum time allowed for the search process.
+confidence_threshold: The confidence threshold for stopping the search.
+max_iterations: The maximum number of iterations allowed for the search.
+convergence_threshold: The threshold for determining convergence.
+convergence_count: The number of consecutive convergences required to stop the search.
+Based on the chosen search algorithm, the solve method calls either the tot_bfs or tot_dfs method to perform the search.
+
 ## tot_bfs Method
 The tot_bfs method performs a breadth-first search to solve the problem. It takes the following parameters:
 
@@ -35,6 +57,16 @@ The print_tree method prints the tree structure in a human-readable format. It t
 node: The current node in the tree.
 depth: The depth of the current node in the tree (default is 0).
 This method is useful for visualizing the tree structure and understanding the search process.
+
+## Usage
+To use the TreeofThoughts class, follow these steps:
+
+Initialize the class with a model and a search algorithm (either 'BFS' or 'DFS').
+Call the solve method with the required parameters to perform the search and obtain the best state.
+(Optional) Use the save_tree_to_json method to save the tree structure and metrics to a JSON file.
+(Optional) Use the print_tree method to visualize the tree structure.
+Here's an example of how to use the TreeofThoughts class:
+
 
 
 # V2 with Monte Carlo, A* Search Algorithm, BFS, Best First Search
